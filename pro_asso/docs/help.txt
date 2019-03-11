@@ -1,26 +1,27 @@
 1、部署
-	1.1 解压txt_classification_service_release_v0.1.zip，将解压后的文件夹拷贝到要部署的路径下即可。
+	1.1 解压pro_asso.tar.gz，将解压后的文件夹拷贝到要部署的路径下即可。
 	1.2 安装好相关Python依赖包（主要是pip install gunicorn gevent flask jieba_fast fasttext）
+	        --新增pip install annoy
 	1.3 为start.sh和stop.sh增加x权限：chmod +x *.sh
 
 
 2、相应配置修改
 	2.1 修改端口号和实例个数（可选）
-	如果需要，请修改部署的端口号（默认是9257）和实例个数（进程数， 默认是10）。修改方式如下：
+	如果需要，请修改部署的端口号（默认是9700）和实例个数（进程数， 默认是10）。修改方式如下：
 编辑gun_basic.conf文件，；
-	bind = '0.0.0.0:9257'  #端口号
+	bind = '0.0.0.0:9700'  #端口号
 	workers = 10         #进程数
 	2.2 修改gun_basic.conf文件的chdir字段 为自己部署的路径
 	2.3 修改config/config.conf日志文件存放路径：
-	LOG_PATH = /home/jadeite_ai/txt_classification_service/logs
+	LOG_PATH = /home/jadeite_ai/pro_asso/logs
 
 3、启动命令
 	在工程目录下使用下面命令运行即可启动和停止
 	./start.sh
 	./stop.sh
 	可通过如下命令查看进程和端口号是否运行：
-	ps -aux | grep txt_classification
-	netstat -an | grep 9257
+	ps -aux | grep pro_asso
+	netstat -an | grep 9700
 	
 4、日志
 	代码日志会在与工程目录同级的logs文件夹下保存。
