@@ -19,7 +19,7 @@ def get_asso_rlt(cont):
     for k, v in (dict(get_sort3(kws))).items():
         res_dic[k] = v
     time2 = time.time()
-    print("(1) keywords extract result : {},  costs : {} ms".format(res_dic, (time2 - time1) * 1000))
+    #print("(1) keywords extract result : {},  costs : {} ms".format(res_dic, (time2 - time1) * 1000))
 
     if cont_type == 'sports':
         res_dic = remove_notsports(res_dic)
@@ -32,7 +32,7 @@ def get_asso_rlt(cont):
         kws_extend = list(set(kws_extend))
         kws_new = sje.distinct_words(kws_extend)
         time4 = time.time()
-        print("(2) keywords analyse result : {},  costs : {} ms".format(res_dic, (time4 - time3) * 1000))
+        #print("(2) keywords analyse result : {},  costs : {} ms".format(res_dic, (time4 - time3) * 1000))
         # 无包含关系，则扩展原结果
         if kws_new == kws or kws_new == kws_extend:
             res_dic.update(wf.associate_words(kws_new, cont_type))
@@ -40,7 +40,7 @@ def get_asso_rlt(cont):
         else:
             res_dic = wf.associate_words(kws_new, cont_type)
         time5 = time.time()
-        print("(3) associate words result : {},  costs : {} ms".format(res_dic, (time5 - time4) * 1000))
+        #print("(3) associate words result : {},  costs : {} ms".format(res_dic, (time5 - time4) * 1000))
 
     # 预测为体育类,则从结果中剔除非体育词
     if cont_type == 'sports':

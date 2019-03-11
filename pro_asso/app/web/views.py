@@ -28,8 +28,10 @@ def togth_handler():
         if cont:
             res_dic = get_asso_rlt(cont)
             logger.info("result : {},  costs : {} ms".format(res_dic, (time.time() - start) * 1000))
-            return Response(json.dumps(res_dic, ensure_ascii=False), mimetype='application/json')
+            #return Response(json.dumps(res_dic, ensure_ascii=False), mimetype='application/json')
+            return json.dumps(res_dic, ensure_ascii=False)
         else:
-            return Response(json.dumps({}, ensure_ascii=False), mimetype='application/json')
+            #return Response(json.dumps({}, ensure_ascii=False), mimetype='application/json')
+            return json.dumps({}, ensure_ascii=False)
     except Exception as e:
         logger.error(str(e))
