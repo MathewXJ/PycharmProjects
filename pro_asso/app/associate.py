@@ -1,10 +1,9 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 import collections
-from app.util.wrapper import get_sort3
+from app.util.wrapper import get_sort3, remove_notsports
 from app.util import w2v_fcst as wf, seg_jieba_extend as sje
 from app.classify import predict
-from app.util.sports_words import sports_words
 import time
 
 
@@ -49,16 +48,6 @@ def get_asso_rlt(cont):
     return res_dic
 
 
-# 体育类结果筛选
-def remove_notsports(input_dic):
-    res_dic = {}
-    for word, sim in input_dic.items():
-        if word in sports_words:
-            res_dic[word] = sim
-        else:
-            if predict(word) == 'sports':
-                res_dic[word] = sim
-    return res_dic
 
 
 if __name__ == "__main__":

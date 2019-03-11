@@ -1,17 +1,24 @@
 # -*- coding: utf-8 -*-
-import time
 from gensim.models import Word2Vec
+from gensim.similarities.index import AnnoyIndexer
 import os
 from app.common.config import model_path
-from app.util.pre_model import RESOURCES_NET_KEYS_SET
+from app.util.pre_model import W2V_VOCABULARY_SET
 
 # 加载model目录下指定模型
 path_to_model = os.path.join(model_path, 'word2vec')
 model = Word2Vec.load(path_to_model)
 
 
+# 从disk加载annoy indexer
+annoy_indexer_100 = AnnoyIndexer()
+annoy_indexer_100.load('annoy_indexer_100')
+annoy_indexer_100.model = model
+
+
 # 使用模型计算输入词组
-def associate_words(words, cont_type, with_model=model, top_n=25):
+# 2018-03-08 使用indexer尝试解决cpu占用问题
+def associate_words(words, cont_type, with_model=model, top_n=10):
     words = [w.strip() for w in words]
     res = {}
     tops = []
@@ -19,7 +26,7 @@ def associate_words(words, cont_type, with_model=model, top_n=25):
         return res
     for i in range(len(words)):
         try:
-            tops = (with_model.most_similar(positive=words[0:(len(words) - i)], topn=top_n))
+            tops = (with_model.most_similar(positive=words[0:(len(words) - i)], topn=top_n, indexer=annoy_indexer_100))
             break
         except Exception as e:
             print('')
@@ -27,11 +34,11 @@ def associate_words(words, cont_type, with_model=model, top_n=25):
         return res
     if cont_type == 'sports':
         for w, sim in tops:
-            if sim > 0.635:
+            if sim > 0.635 and w not in words:
                 res[w] = sim
     else:
         for w, sim in tops:
-            if w in RESOURCES_NET_KEYS_SET and sim > 0.635:
+            if w in W2V_VOCABULARY_SET and sim > 0.635 and w not in words:
                 res[w] = sim
     return res
 

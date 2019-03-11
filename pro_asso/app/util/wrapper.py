@@ -1,5 +1,6 @@
-from app.util.pre_model import RESOURCES_NET_KEYS_SET
+from app.util.pre_model import RESOURCES_NET_KEYS_SET, RESORRCES_NET_SPORTS_SET
 from app.util.resources_net import resources_net
+from app.classify import predict
 
 
 # 以关键词作为key，从常量字典中获取value
@@ -39,3 +40,15 @@ def _get_words_dic(list1):
 def get_sort3(kws):
     dic_list = _get_dic_list(kws)
     return _get_words_dic(dic_list)
+
+
+# 体育类结果筛选
+def remove_notsports(input_dic):
+    res_dic = {}
+    for word, sim in input_dic.items():
+        if word in set(RESORRCES_NET_SPORTS_SET):
+            res_dic[word] = sim
+        else:
+            if predict(word) == 'sports':
+                res_dic[word] = sim
+    return res_dic

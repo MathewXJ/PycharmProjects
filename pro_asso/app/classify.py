@@ -2,7 +2,7 @@
 import fasttext
 # windows版本fasttext大坑
 # import fastText.FastText as fasttext
-import jieba
+import jieba_fast as jieba
 import numpy as np
 from app.common.config import MODEL_FILE_PATH, USER_DIC_PATH, LABEL_PREFIX, RETURN_PROB
 

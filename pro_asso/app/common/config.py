@@ -70,5 +70,5 @@ LABEL_PREFIX = eval(cp['model.settings']['LABEL_PREFIX'])
 USER_DIC_NAME = eval(cp['model.settings']['USER_DIC_NAME'])
 USER_DIC_PATH = join(model_path, USER_DIC_NAME)
 
-# 词向量全部关键词
+# 词向量全部关键词-作为用户字典
 W2V_VOCABULARY_PATH = join(model_path, 'w2v_vocabulary')

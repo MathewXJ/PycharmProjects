@@ -2,13 +2,17 @@
 __author__ = 'xujian'
 
 import jieba.posseg as pseg
-from jieba import analyse
+from jieba import analyse, load_userdict
 from app.util.pre_model import RESOURCES_NET_KEYS, USER_STOP
 from flashtext import KeywordProcessor
+from app.common.config import W2V_VOCABULARY_PATH
 
 # 导入关键字
 resources_net_processor = KeywordProcessor()
 resources_net_processor.add_keywords_from_list(RESOURCES_NET_KEYS)
+
+# 导入用户字典
+load_userdict(W2V_VOCABULARY_PATH)
 
 
 # 分词，词性标注，词和词性构成一个元组
@@ -203,7 +207,7 @@ if __name__ == "__main__":
     # cont = '特种兵之深入敌后'
     # cont = '（体育资讯）英乙球员半场吊射领衔周十佳进球'
     cont = '《声临其境2》“雪姨”王琳陕西话俄语秒切换'
-    cont = '吴京《战狼2》超燃高能情节'
+    #cont = '吴京《战狼2》超燃高能情节'
     kws = keywords_extract(cont)
     kws_extend = kws[:]
     print('原提取结果：', kws)
