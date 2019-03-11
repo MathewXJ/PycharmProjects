@@ -11,8 +11,9 @@ model = Word2Vec.load(path_to_model)
 
 
 # 从disk加载annoy indexer
+path_to_indexer = os.path.join(model_path, 'annoy_indexer_100')
 annoy_indexer_100 = AnnoyIndexer()
-annoy_indexer_100.load('annoy_indexer_100')
+annoy_indexer_100.load(path_to_indexer)
 annoy_indexer_100.model = model
 
 
