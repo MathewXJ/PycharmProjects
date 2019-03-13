@@ -35,11 +35,11 @@ def associate_words(words, cont_type, with_model=model, top_n=10):
         return res
     if cont_type == 'sports':
         for w, sim in tops:
-            if sim > 0.635 and w not in words:
+            if w not in words:
                 res[w] = sim
     else:
         for w, sim in tops:
-            if w in W2V_VOCABULARY_SET and sim > 0.635 and w not in words:
+            if w in W2V_VOCABULARY_SET and w not in words:
                 res[w] = sim
     return res
 
