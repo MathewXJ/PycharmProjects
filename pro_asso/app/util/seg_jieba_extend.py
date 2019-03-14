@@ -51,9 +51,12 @@ def distinct_words(words):
     # 去除包含关系的词
     for i, w in enumerate(words):
         str_left_combine = ''.join(words[0:i] + words[(i + 1):len(words)])
-        # 例如“[大江大河,大江,大河]这种情况很特殊，再加条件限制”
-        if w in str_left_combine or w != str_left_combine:
-            continue
+        # 例如“[大江大河,大江,大河] ['花不弃', '小女']这两种情况很特殊，再加条件限制”
+        if w in str_left_combine:
+            if w != str_left_combine:
+                continue
+            else:
+                rlt.append(w)
         else:
             rlt.append(w)
     return rlt
@@ -212,6 +215,7 @@ if __name__ == "__main__":
     #cont = '吴京《战狼2》超燃高能情节'
     #cont = '18/19赛季NBA常规赛全场回放：马刺112:105独行侠（20190313）'
     cont = '大江大河'
+    print([w for w in analyse.extract_tags(cont, topK=10)])
     kws = keywords_extract(cont)
     kws_extend = kws[:]
     print('原提取结果：', kws)

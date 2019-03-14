@@ -73,4 +73,4 @@ USER_DIC_PATH = join(model_path, USER_DIC_NAME)
 W2V_VOCABULARY_PATH = join(model_path, 'w2v_vocabulary')
 
 # 体育类要排除的词
-SPORTS_KEYWORDS_REMOVE_PATH = join(model_path, '')
+SPORTS_KEYWORDS_REMOVE_PATH = join(model_path, 'sports_keywords_remove')
