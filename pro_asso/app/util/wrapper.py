@@ -1,4 +1,4 @@
-from app.util.pre_model import RESOURCES_NET_KEYS_SET, RESORRCES_NET_SPORTS_SET
+from app.util.pre_model import RESOURCES_NET_KEYS_SET, SPORTS_KEYWORDS_REMOVE_SET
 from app.util.resources_net import resources_net
 from app.classify import predict
 
@@ -43,12 +43,10 @@ def get_sort3(kws):
 
 
 # 体育类结果筛选
+# 去除无意义体育词
 def remove_notsports(input_dic):
     res_dic = {}
     for word, sim in input_dic.items():
-        if word in set(RESORRCES_NET_SPORTS_SET):
+        if word not in SPORTS_KEYWORDS_REMOVE_SET and predict(word) == 'sports':
             res_dic[word] = sim
-        else:
-            if predict(word) == 'sports':
-                res_dic[word] = sim
     return res_dic

@@ -1,5 +1,3 @@
-from app.common.config import sports_words_list_path
-
 
 def write_list_to_file(file_path, lst, lst_name):
     with open(file_path, 'w') as f:

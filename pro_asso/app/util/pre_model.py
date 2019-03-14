@@ -1,8 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-from app.common.config import user_stop_path_add, user_dic_path, W2V_VOCABULARY_PATH
+from app.common.config import user_stop_path_add, user_dic_path, W2V_VOCABULARY_PATH, SPORTS_KEYWORDS_REMOVE_PATH
 from app.util.resources_net import resources_net
-from app.util.sports_words import sports_words
 
 USER_STOP = [w.strip() for w in open(user_stop_path_add, 'r', encoding='utf-8').readlines() if w.strip()]
 USER_DIC = [w.strip() for w in open(user_dic_path, 'r', encoding='utf-8').readlines() if w.strip()]
@@ -19,5 +18,6 @@ RESOURCES_NET_KEYS_SET = set(RESOURCES_NET_KEYS)
 with open(W2V_VOCABULARY_PATH, 'r', encoding='utf-8') as fr:
     W2V_VOCABULARY_SET = set([w.strip() for w in fr.readlines() if w.strip()])
 
-# 字典中体育类名词集合
-RESORRCES_NET_SPORTS_SET = set(sports_words)
+# 无意义体育类名词排除集合
+with open(SPORTS_KEYWORDS_REMOVE_PATH, 'r', encoding='utf-8') as fr:
+    SPORTS_KEYWORDS_REMOVE_SET = set([w.strip() for w in fr.readlines() if w.strip()])

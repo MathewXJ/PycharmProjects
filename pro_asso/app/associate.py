@@ -3,9 +3,10 @@
 import collections
 from app.util.wrapper import get_sort3, remove_notsports
 from app.util import w2v_fcst as wf, seg_jieba_extend as sje
+from app.util import constants
 from app.classify import predict
 import time
-
+from app.common.utils import get_param_value
 
 # 求关联词结果
 def get_asso_rlt(cont):
@@ -42,11 +43,43 @@ def get_asso_rlt(cont):
         time5 = time.time()
         #print("(3) associate words result : {},  costs : {} ms".format(res_dic, (time5 - time4) * 1000))
 
+    return res_dic
+
+
+# 求关联词结果-json输入
+def get_asso_rlt_new(req_data):
+    cont = get_param_value(constants.DATA_FIELD_CONT, req_data)
+    cont_name = get_param_value(constants.DATA_FIELD_CONTNAME, req_data)
+    cont_display_type = get_param_value(constants.DATA_FIELD_CONTDISPLAYTYPE, req_data)
+    # 预测输入是否为体育类
+    cont_type = predict(cont)
+    #cont_type = 'sports'
+    res_dic = {}
+    # 获取输入中的关键字列表
+    kws = sje.keywords_extract(cont)
+    for k, v in (dict(get_sort3(kws))).items():
+        res_dic[k] = v
+
+    if cont_type == 'sports':
+        res_dic = remove_notsports(res_dic)
+
+    # 若结果小于5，则加入jieba分词结果并使用模型计算
+    if len(res_dic) < 5:
+        kws_extend = kws[:]
+        kws_extend.extend(sje.keywords_analyse(cont))
+        kws_extend = list(set(kws_extend))
+        kws_new = sje.distinct_words(kws_extend)
+        # 无包含关系，则扩展原结果
+        if kws_new == kws or kws_new == kws_extend:
+            res_dic.update(wf.associate_words(kws_new, cont_type))
+        # 有包含关系，则忽略原结果
+        else:
+            res_dic = wf.associate_words(kws_new, cont_type)
+
     # 预测为体育类,则从结果中剔除非体育词
     if cont_type == 'sports':
         res_dic = remove_notsports(res_dic)
     return res_dic
-
 
 
 

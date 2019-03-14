@@ -50,7 +50,9 @@ def distinct_words(words):
     rlt = []
     # 去除包含关系的词
     for i, w in enumerate(words):
-        if w in ''.join(words[0:i] + words[(i + 1):len(words)]):
+        str_left_combine = ''.join(words[0:i] + words[(i + 1):len(words)])
+        # 例如“[大江大河,大江,大河]这种情况很特殊，再加条件限制”
+        if w in str_left_combine or w != str_left_combine:
             continue
         else:
             rlt.append(w)
@@ -206,8 +208,10 @@ if __name__ == "__main__":
     # cont = '18/19赛季NBA常规赛全场回放：森林狼121:
     # cont = '特种兵之深入敌后'
     # cont = '（体育资讯）英乙球员半场吊射领衔周十佳进球'
-    cont = '《声临其境2》“雪姨”王琳陕西话俄语秒切换'
+    #cont = '《声临其境2》“雪姨”王琳陕西话俄语秒切换'
     #cont = '吴京《战狼2》超燃高能情节'
+    #cont = '18/19赛季NBA常规赛全场回放：马刺112:105独行侠（20190313）'
+    cont = '大江大河'
     kws = keywords_extract(cont)
     kws_extend = kws[:]
     print('原提取结果：', kws)

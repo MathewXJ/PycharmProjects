@@ -4,6 +4,7 @@ from gensim.similarities.index import AnnoyIndexer
 import os
 from app.common.config import model_path
 from app.util.pre_model import W2V_VOCABULARY_SET
+from app.util.wrapper import remove_notsports
 
 # 加载model目录下指定模型
 path_to_model = os.path.join(model_path, 'word2vec')
@@ -33,13 +34,14 @@ def associate_words(words, cont_type, with_model=model, top_n=10):
             print('')
     if (len(tops)) == 0:
         return res
+    # 若为体育类，则去除结果中非体育词。去除概率以及返回结果限制
     if cont_type == 'sports':
         for w, sim in tops:
-            if w not in words:
-                res[w] = sim
+            res[w] = sim
+        res = remove_notsports(res)
     else:
         for w, sim in tops:
-            if w in W2V_VOCABULARY_SET and w not in words:
+            if w in W2V_VOCABULARY_SET:
                 res[w] = sim
     return res
 

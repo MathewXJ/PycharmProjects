@@ -28,7 +28,6 @@ resources_path=os.path.join(config_path, 'resources_dic')
 resources_dic_path=os.path.join(config_path, 'resources_dic')
 resources_vedio_path=os.path.join(config_path, 'mediaVideoName2')
 
-sports_words_list_path = join(getProjectDir(), 'app', 'util', 'sports_words.py')
 
 # 拼接model目录路径
 model_path = os.path.join(getProjectDir(), 'model')
@@ -72,3 +71,6 @@ USER_DIC_PATH = join(model_path, USER_DIC_NAME)
 
 # 词向量全部关键词-作为用户字典
 W2V_VOCABULARY_PATH = join(model_path, 'w2v_vocabulary')
+
+# 体育类要排除的词
+SPORTS_KEYWORDS_REMOVE_PATH = join(model_path, '')
