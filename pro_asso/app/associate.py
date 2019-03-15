@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 import collections
-from app.util.wrapper import get_sort3, get_asso_contents, get_asso_people, remove_not_conts, remove_not_people
+from app.util.wrapper import get_sort3, get_asso_contents, get_asso_people, remove_not_conts, remove_not_people, limit_people_num
 from app.util import w2v_fcst as wf, seg_jieba_extend as sje
 from app.util import constants
 from app.classify import predict
@@ -45,7 +45,7 @@ def get_asso_rlt_not_sports(cont):
     res_dic_people.update(get_asso_people(kws_new))
 
     # 合并结果
-    res_dic_contents.update(res_dic_people)
+    res_dic_contents.update(limit_people_num(res_dic_people,3))
     res_dic = res_dic_contents
 
     return res_dic

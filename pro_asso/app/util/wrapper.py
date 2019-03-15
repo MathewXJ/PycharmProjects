@@ -108,10 +108,15 @@ def get_asso_people(kws):
     kws = [w.strip() for w in kws if w.strip() in ALL_STAR_NAME_SET]
     if len(kws) == 0:
         return {}
-    out = {}
     peoples = remove_not_people(associate_words(kws, "not-sports"))
+    out = limit_people_num(peoples, 3)
+    return out
+
+# 限制人名个数
+def limit_people_num(peoples, num):
+    out = {}
     peoples_lst = list(peoples.keys())
-    for people in peoples_lst[0:3]:
+    for people in peoples_lst[0:num]:
         out[people] = peoples[people]
     return out
 
