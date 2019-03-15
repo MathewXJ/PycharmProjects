@@ -74,6 +74,7 @@ USER_DIC_PATH = join(model_user_dict_path, USER_DIC_NAME)
 
 # jieba分词-用户字典-from resources_net
 W2V_VOCABULARY_PATH = join(model_user_dict_path, 'w2v_vocabulary')
+VOCABULARY_PATH = join(model_path, 'vocabulary')
 
 # 体育类要排除的词
 SPORTS_KEYWORDS_REMOVE_PATH = join(model_user_dict_path, 'sports_keywords_remove')
