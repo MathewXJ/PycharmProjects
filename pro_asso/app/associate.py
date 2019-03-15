@@ -36,6 +36,9 @@ def get_asso_rlt(cont):
         kws_extend.extend(sje.keywords_analyse(cont))
         kws_extend = list(set(kws_extend))
         kws_new = sje.distinct_words(kws_extend)
+        if cont_type == 'sports':
+            kws_new = [w.strip() for w in kws_new if predict(w) == 'sports']
+        print(kws_new)
         time4 = time.time()
         print("(2) keywords analyse result : {},  costs : {} ms".format(res_dic, (time4 - time3) * 1000))
         # 无包含关系，则扩展原结果

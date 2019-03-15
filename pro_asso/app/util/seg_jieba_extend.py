@@ -214,7 +214,7 @@ if __name__ == "__main__":
     # cont = '（体育资讯）英乙球员半场吊射领衔周十佳进球'
     #cont = '《声临其境2》“雪姨”王琳陕西话俄语秒切换'
     #cont = '吴京《战狼2》超燃高能情节'
-    # cont = '18/19赛季NBA常规赛全场回放：马刺112:105独行侠（20190313）'
+    cont = '18/19赛季NBA常规赛全场回放：马刺112:105独行侠（20190313）'
     #cont = '小女花不弃'
     print([w for w in analyse.extract_tags(cont, topK=10)])
     kws = keywords_extract(cont)
