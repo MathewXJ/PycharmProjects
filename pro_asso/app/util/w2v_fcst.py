@@ -3,7 +3,7 @@ from gensim.models import Word2Vec
 from gensim.similarities.index import AnnoyIndexer
 import os
 from app.common.config import model_path
-from app.util.pre_model import W2V_VOCABULARY_SET
+from app.util.pre_model import W2V_VOCABULARY_SET, VOCABULARY_SET
 from app.util.wrapper import remove_notsports
 
 # 加载model目录下指定模型
@@ -22,6 +22,7 @@ annoy_indexer_100.model = model
 # 2018-03-08 使用indexer尝试解决cpu占用问题
 def associate_words(words, cont_type, with_model=model, top_n=10):
     words = [w.strip() for w in words]
+    words = list(filter(lambda x: x in VOCABULARY_SET, words))
     res = {}
     tops = []
     if words is None or len(words) == 0:

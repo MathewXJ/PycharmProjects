@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 from app.common.config import user_stop_path_add, user_dic_path, W2V_VOCABULARY_PATH, SPORTS_KEYWORDS_REMOVE_PATH, \
-    ALL_STAR_NAME_PATH, INDEX_SX_APP_CONTENT_PATH
+    ALL_STAR_NAME_PATH, INDEX_SX_APP_CONTENT_PATH, VOCABULARY_PATH
 from app.util.resources_net import resources_net
 
 '''
@@ -43,6 +43,15 @@ with open(INDEX_SX_APP_CONTENT_PATH, 'r', encoding='utf-8') as fr:
             temp_list.append(cont_name)
             INDEX_SX_APP_CONTENT_DICT[cont_name] = cont_info
     INDEX_SX_APP_CONTNAME_SET = set(temp_list)
+
+
+with open(VOCABULARY_PATH, 'r', encoding='utf-8') as fr:
+    voc = fr.readlines()
+    VOCABULARY_SET = set()
+    for line in voc:
+        if line.strip():
+            VOCABULARY_SET.add(line.strip().split()[0].strip())
+
 
 
 if __name__ ==  "__main__":
