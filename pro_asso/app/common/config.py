@@ -84,3 +84,6 @@ ALL_STAR_NAME_PATH = join(model_user_dict_path, 'all_star_name')
 
 # 内容类-内容及相关信息-from table:index_sx_app_content-2019.03.15 11：00：00
 INDEX_SX_APP_CONTENT_PATH = join(model_user_dict_path, 'index_sx_app_content')
+
+# 内容类-内容名
+INDEX_SX_APP_CONTENT_NAME_PATH = join(model_user_dict_path, 'index_sx_app_content_name')

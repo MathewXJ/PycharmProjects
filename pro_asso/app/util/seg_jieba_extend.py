@@ -5,7 +5,7 @@ import jieba.posseg as pseg
 from jieba import analyse, load_userdict
 from app.util.pre_model import RESOURCES_NET_KEYS, USER_STOP, INDEX_SX_APP_CONTNAME_SET
 from flashtext import KeywordProcessor
-from app.common.config import W2V_VOCABULARY_PATH
+from app.common.config import W2V_VOCABULARY_PATH, ALL_STAR_NAME_PATH, INDEX_SX_APP_CONTENT_NAME_PATH
 
 # 导入关键字
 resources_net_processor = KeywordProcessor()
@@ -14,6 +14,8 @@ resources_net_processor.add_keywords_from_list(list(INDEX_SX_APP_CONTNAME_SET))
 
 # 导入用户字典
 load_userdict(W2V_VOCABULARY_PATH)
+load_userdict(ALL_STAR_NAME_PATH)
+load_userdict(INDEX_SX_APP_CONTENT_NAME_PATH)
 
 
 # 分词，词性标注，词和词性构成一个元组
@@ -215,7 +217,8 @@ if __name__ == "__main__":
     #cont = '《声临其境2》“雪姨”王琳陕西话俄语秒切换'
     #cont = '吴京《战狼2》超燃高能情节'
     cont = '18/19赛季NBA常规赛全场回放：马刺112:105独行侠（20190313）'
-    #cont = '小女花不弃'
+    cont = '小女花不弃:林依晨张彬彬上演虐恋情深，莲花夫妇锁了！'
+    cont = '妻子的浪漫旅行2'
     print([w for w in analyse.extract_tags(cont, topK=10)])
     kws = keywords_extract(cont)
     kws_extend = kws[:]

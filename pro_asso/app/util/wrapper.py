@@ -1,7 +1,11 @@
-from app.util.pre_model import RESOURCES_NET_KEYS_SET, SPORTS_KEYWORDS_REMOVE_SET, INDEX_SX_APP_CONTENT_DICT, INDEX_SX_APP_CONTNAME_SET
+from app.util.pre_model import RESOURCES_NET_KEYS_SET, SPORTS_KEYWORDS_REMOVE_SET, INDEX_SX_APP_CONTENT_DICT, \
+    INDEX_SX_APP_CONTNAME_SET, ALL_STAR_NAME_SET
 from app.util.resources_net import resources_net
-from app.classify import predict
+from app.util.douban_works_info import douban_works_info
+# from app.classify import predict
 from app.util.constants import DATA_FIELD_CONTDISPLAYTYPE_DICT
+from app.util.w2v_fcst import associate_words
+import re
 
 
 # 以关键词作为key，从常量字典中获取value
@@ -78,6 +82,7 @@ def get_rlt4content(cont_name):
             rlt[people + cont_display_type] = 1.0001
     return rlt
 
+
 def get_rlt4contents(kws):
     rlt = {}
     for w in kws:
@@ -86,7 +91,54 @@ def get_rlt4contents(kws):
     return rlt
 
 
+# 根据作品，获得相关作品
+# 豆瓣数据
+def get_asso_contents(kws):
+    kws = [w.strip() for w in kws if w.strip() in INDEX_SX_APP_CONTNAME_SET]
+    if len(kws) == 0:
+        return {}
+    out = {}
+    for cont_name in kws:
+        value = douban_works_info.get(cont_name, None)
+        if not value:
+            continue
+        else:
+            asso_conts = [w.strip() for w in value.get("works_recommendations_10").split('|')]
+            for i in range(len(asso_conts)):
+                asso_cont = re.split('[ ·]', asso_conts[i])
+                asso_cont = ''.join(asso_cont)
+                out[asso_cont] = 1.1 - i * 0.01
+    return remove_not_conts(out)
 
-if __name__ ==  "__main__":
+
+def remove_not_conts(input_dic):
+    res_dic = {}
+    for word, sim in input_dic.items():
+        if word in INDEX_SX_APP_CONTNAME_SET:
+            res_dic[word] = sim
+    return res_dic
+
+# 根据人名，获取相关的人名，不超过三个
+def get_asso_people(kws):
+    kws = [w.strip() for w in kws if w.strip() in ALL_STAR_NAME_SET]
+    if len(kws) == 0:
+        return {}
+    out = {}
+    peoples = remove_not_people(associate_words(kws, "not-sports"))
+    peoples_lst = list(peoples.keys())
+    for people in peoples_lst[0:3]:
+        out[people] = peoples[people]
+    return out
+
+
+def remove_not_people(input_dic):
+    res_dic = {}
+    for word, sim in input_dic.items():
+        if word in ALL_STAR_NAME_SET:
+            res_dic[word] = sim
+    return res_dic
+
+
+if __name__ == "__main__":
     str = ['哈哈农夫']
-    print(get_rlt4contents(str))
+    print(get_asso_contents(str))

@@ -18,7 +18,8 @@ def get_w2v_vocabulay(input_path, output_path):
         for w in vocabulay:
             fw.write(w + '\n')
 
+from app.util.pre_model import INDEX_SX_APP_CONTNAME_SET
 if __name__ == "__main__":
-    input_path = 'vocabulary'
-    output_path = 'w2v_vocabulary'
-    get_w2v_vocabulay(input_path, output_path)
+    with open("index_sx_app_content_name", 'w', encoding='utf-8') as fw:
+        for w in INDEX_SX_APP_CONTNAME_SET:
+            fw.write(w + '\n')

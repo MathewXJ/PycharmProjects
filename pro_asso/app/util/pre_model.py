@@ -44,7 +44,7 @@ with open(INDEX_SX_APP_CONTENT_PATH, 'r', encoding='utf-8') as fr:
             INDEX_SX_APP_CONTENT_DICT[cont_name] = cont_info
     INDEX_SX_APP_CONTNAME_SET = set(temp_list)
 
-
+# 词向量字典关键词，解决模型报错问题
 with open(VOCABULARY_PATH, 'r', encoding='utf-8') as fr:
     voc = fr.readlines()
     VOCABULARY_SET = set()
