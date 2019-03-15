@@ -1,6 +1,6 @@
 from app.util.pre_model import RESOURCES_NET_KEYS_SET, SPORTS_KEYWORDS_REMOVE_SET, INDEX_SX_APP_CONTENT_DICT, INDEX_SX_APP_CONTNAME_SET
 from app.util.resources_net import resources_net
-#from app.classify import predict
+from app.classify import predict
 from app.util.constants import DATA_FIELD_CONTDISPLAYTYPE_DICT
 
 
