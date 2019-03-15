@@ -1,10 +1,9 @@
-from app.util.pre_model import RESOURCES_NET_KEYS_SET, SPORTS_KEYWORDS_REMOVE_SET, INDEX_SX_APP_CONTENT_DICT, \
-    INDEX_SX_APP_CONTNAME_SET, ALL_STAR_NAME_SET
+from app.util.pre_model import RESOURCES_NET_KEYS_SET, INDEX_SX_APP_CONTENT_DICT, INDEX_SX_APP_CONTNAME_SET, ALL_STAR_NAME_SET
 from app.util.resources_net import resources_net
 from app.util.douban_works_info import douban_works_info
-# from app.classify import predict
 from app.util.constants import DATA_FIELD_CONTDISPLAYTYPE_DICT
 from app.util.w2v_fcst import associate_words
+from app.util.remove_utils import remove_not_conts,remove_not_people
 import re
 
 
@@ -47,14 +46,6 @@ def get_sort3(kws):
     return _get_words_dic(dic_list)
 
 
-# 体育类结果筛选
-# 去除无意义体育词
-def remove_notsports(input_dic):
-    res_dic = {}
-    for word, sim in input_dic.items():
-        if word not in SPORTS_KEYWORDS_REMOVE_SET and predict(word) == 'sports':
-            res_dic[word] = sim
-    return res_dic
 
 
 # 输入：内容名称
@@ -111,12 +102,6 @@ def get_asso_contents(kws):
     return remove_not_conts(out)
 
 
-def remove_not_conts(input_dic):
-    res_dic = {}
-    for word, sim in input_dic.items():
-        if word in INDEX_SX_APP_CONTNAME_SET:
-            res_dic[word] = sim
-    return res_dic
 
 # 根据人名，获取相关的人名，不超过三个
 def get_asso_people(kws):
@@ -129,14 +114,6 @@ def get_asso_people(kws):
     for people in peoples_lst[0:3]:
         out[people] = peoples[people]
     return out
-
-
-def remove_not_people(input_dic):
-    res_dic = {}
-    for word, sim in input_dic.items():
-        if word in ALL_STAR_NAME_SET:
-            res_dic[word] = sim
-    return res_dic
 
 
 if __name__ == "__main__":

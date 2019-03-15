@@ -4,7 +4,7 @@ from gensim.similarities.index import AnnoyIndexer
 import os
 from app.common.config import model_path
 from app.util.pre_model import W2V_VOCABULARY_SET, VOCABULARY_SET
-from app.util.wrapper import remove_notsports
+from app.util.remove_utils import remove_notsports
 
 # 加载model目录下指定模型
 path_to_model = os.path.join(model_path, 'word2vec')

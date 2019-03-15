@@ -1,12 +1,13 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 import collections
-from app.util.wrapper import get_sort3, remove_notsports, get_asso_contents, get_asso_people, remove_not_conts, remove_not_people
+from app.util.wrapper import get_sort3, get_asso_contents, get_asso_people, remove_not_conts, remove_not_people
 from app.util import w2v_fcst as wf, seg_jieba_extend as sje
 from app.util import constants
 from app.classify import predict
 import time
 from app.common.utils import get_param_value
+from app.util.remove_utils import remove_notsports
 
 # 求关联词结果
 def get_asso_rlt(cont):
