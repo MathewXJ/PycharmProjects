@@ -22,7 +22,6 @@ def get_asso_rlt(cont):
 
 
 def get_asso_rlt_not_sports(cont):
-    cont_type = 'not-sports'
     res_dic = {}
 
     # 直接提前输入中的关键字列表
@@ -46,7 +45,8 @@ def get_asso_rlt_not_sports(cont):
     res_dic_people.update(get_asso_people(kws_new))
 
     # 合并结果
-    res_dic = res_dic_contents.update(res_dic_people)
+    res_dic_contents.update(res_dic_people)
+    res_dic = res_dic_contents
 
     return res_dic
 
