@@ -32,6 +32,9 @@ resources_vedio_path=os.path.join(config_path, 'mediaVideoName2')
 # 拼接model目录路径
 model_path = os.path.join(getProjectDir(), 'model')
 
+# 用户词典/本地缓存目录路径
+model_user_dict_path = os.path.join(model_path, 'user_dicts')
+
 
 #weight_acs_acs=1.30
 #weight_acs_vedio=1.30
@@ -65,12 +68,18 @@ MODEL_FILE_PATH = join(model_path, MODEL_NAME)
 # label prefix
 LABEL_PREFIX = eval(cp['model.settings']['LABEL_PREFIX'])
 
-# jieba分词-用户字典
+# jieba分词-用户字典-体育类使用
 USER_DIC_NAME = eval(cp['model.settings']['USER_DIC_NAME'])
-USER_DIC_PATH = join(model_path, USER_DIC_NAME)
+USER_DIC_PATH = join(model_user_dict_path, USER_DIC_NAME)
 
-# 词向量全部关键词-作为用户字典
-W2V_VOCABULARY_PATH = join(model_path, 'w2v_vocabulary')
+# jieba分词-用户字典-from resources_net
+W2V_VOCABULARY_PATH = join(model_user_dict_path, 'w2v_vocabulary')
 
 # 体育类要排除的词
-SPORTS_KEYWORDS_REMOVE_PATH = join(model_path, 'sports_keywords_remove')
+SPORTS_KEYWORDS_REMOVE_PATH = join(model_user_dict_path, 'sports_keywords_remove')
+
+# 明星类-明星名
+ALL_STAR_NAME_PATH = join(model_user_dict_path, 'all_star_name')
+
+# 内容类-内容及相关信息-from table:index_sx_app_content-2019.03.15 11：00：00
+INDEX_SX_APP_CONTENT_PATH = join(model_user_dict_path, 'index_sx_app_content')

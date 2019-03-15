@@ -3,13 +3,14 @@ __author__ = 'xujian'
 
 import jieba.posseg as pseg
 from jieba import analyse, load_userdict
-from app.util.pre_model import RESOURCES_NET_KEYS, USER_STOP
+from app.util.pre_model import RESOURCES_NET_KEYS, USER_STOP, INDEX_SX_APP_CONTNAME_SET
 from flashtext import KeywordProcessor
 from app.common.config import W2V_VOCABULARY_PATH
 
 # 导入关键字
 resources_net_processor = KeywordProcessor()
 resources_net_processor.add_keywords_from_list(RESOURCES_NET_KEYS)
+resources_net_processor.add_keywords_from_list(list(INDEX_SX_APP_CONTNAME_SET))
 
 # 导入用户字典
 load_userdict(W2V_VOCABULARY_PATH)
@@ -209,12 +210,12 @@ def read_quanzhi(request):
 if __name__ == "__main__":
     cont = 'CBA常规赛第6轮：上海队 蔡亮开球分给弗雷戴特，插羽破天骄，三分扳平比分'
     # cont = '18/19赛季NBA常规赛全场回放：森林狼121:
-    # cont = '特种兵之深入敌后'
+    cont = '特种兵之深入敌后'
     # cont = '（体育资讯）英乙球员半场吊射领衔周十佳进球'
     #cont = '《声临其境2》“雪姨”王琳陕西话俄语秒切换'
     #cont = '吴京《战狼2》超燃高能情节'
-    #cont = '18/19赛季NBA常规赛全场回放：马刺112:105独行侠（20190313）'
-    cont = '大江大河'
+    # cont = '18/19赛季NBA常规赛全场回放：马刺112:105独行侠（20190313）'
+    #cont = '小女花不弃'
     print([w for w in analyse.extract_tags(cont, topK=10)])
     kws = keywords_extract(cont)
     kws_extend = kws[:]
