@@ -1,8 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 from app.common.config import user_stop_path_add, user_dic_path, W2V_VOCABULARY_PATH, SPORTS_KEYWORDS_REMOVE_PATH, \
-    ALL_STAR_NAME_PATH, INDEX_SX_APP_CONTENT_PATH, VOCABULARY_PATH
+    ALL_STAR_NAME_PATH, INDEX_SX_APP_CONTENT_PATH, VOCABULARY_PATH, SPORT_LEAGUES_ALL_PATH, SPORT_TEAMS_ALL_PATH, \
+    SPORT_MEMBERS_ALL_PATH
 from app.util.resources_net import resources_net
+
 
 '''
 预生成各种常量字典、集合
@@ -44,7 +46,7 @@ with open(INDEX_SX_APP_CONTENT_PATH, 'r', encoding='utf-8') as fr:
             INDEX_SX_APP_CONTENT_DICT[cont_name] = cont_info
     INDEX_SX_APP_CONTNAME_SET = set(temp_list)
 
-# 词向量字典关键词，解决模型报错问题
+# 词向量w2v关键词，解决模型报错问题
 with open(VOCABULARY_PATH, 'r', encoding='utf-8') as fr:
     voc = fr.readlines()
     VOCABULARY_SET = set()
@@ -53,11 +55,94 @@ with open(VOCABULARY_PATH, 'r', encoding='utf-8') as fr:
             VOCABULARY_SET.add(line.strip().split()[0].strip())
 
 
+'''
+2019-03-19
+体育类字典初始化
+包括CBA、NBA、五大联赛等联赛信息、队伍信息、队员信息
+'''
+# 球员名及相关信息
+with open(SPORT_MEMBERS_ALL_PATH, 'r', encoding='utf-8') as fr:
+    SPORT_MEMBERS_ALL_DIC = {}
+    for line in fr.readlines():
+        line = eval(line.strip())
+        if line:
+            member_info = {}
+            name = line.get("name")
+            leagueType = line.get("leagueType")
+            member_info['leagueType'] = leagueType
+            if leagueType == 'FOOTBALL':
+                member_info['teamName'] = line.get("teamName")
+                member_info['leagueName'] = line.get("leagueName")
+            else:
+                member_info['teamName'] = line.get("team")
+                member_info['leagueName'] = leagueType
+            # 别名-除alias字段外，还包括外国名的姓、去标点后的外国名
+            alias_str = line.get("alias")
+            alias = set()
+            if alias_str:
+                alias = set(alias_str.split('|'))
+            if '·' in name:
+                alias.add(name.split('·')[-1])
+                alias.add(''.join(name.split('·')))
+            if '-' in name:
+                alias.add(name.split('-')[-1])
+                alias.add(''.join(name.split('-')))
+            member_info['alias'] = alias
 
-if __name__ ==  "__main__":
-    # 隔壁女生的日常 : ['1000', '刘俊峰', '吴晴|崔馨心|王佳慧|高杨|李云鹤|贠辰鑫|林川']
-    # print(len(INDEX_SX_APP_CONTENT_DICT))
-    # print(len(INDEX_SX_APP_CONTNAME_SET))
-    str = '吴晴'
-    print(str.split('|'))
+            SPORT_MEMBERS_ALL_DIC[name] = member_info
+
+
+# 球队名及相关信息
+with open(SPORT_TEAMS_ALL_PATH, 'r', encoding='utf-8') as fr:
+    SPORT_TEAMS_ALL_DICT = {}
+    for line in fr.readlines():
+        line = eval(line.strip())
+        if line:
+            team_info = {}
+            team_name = line.get("name")
+            # 别名-除alias字段外，队名加“队”字
+            alias_str = line.get("alias")
+            alias = set()
+            if alias_str:
+                alias = set(alias_str.split('|'))
+            alias.add(team_name + "队")
+            # 判断是否为NBA，NBA拼接city字段作为别名
+            league_type = line.get("leagueType")
+            if league_type == 'FOOTBALL':
+                team_info['leagueName'] = line.get("leagueName")
+            if league_type == 'CBA':
+                team_info['leagueName'] = league_type
+                team_info['WholeName'] = alias_str.split('|')[0]
+            if league_type == 'NBA':
+                team_info['leagueName'] = league_type
+                team_info['WholeName'] = line.get("city") + team_name
+                alias.add(line.get("city") + team_name)
+                alias.add(line.get("city") + team_name + "队")
+
+            team_info['leagueType'] = league_type
+            team_info['alias'] = alias
+            team_info['key_members'] = line.get('key_members')
+
+            SPORT_TEAMS_ALL_DICT[team_name] = team_info
+
+
+# 联赛名及相关信息
+with open(SPORT_LEAGUES_ALL_PATH, 'r', encoding='utf-8') as fr:
+    SPORT_LEAGUES_ALL_DICT = {}
+    for line in fr.readlines():
+        line = eval(line.strip())
+        if line:
+            league_info = {}
+            league_name = line.get("name")
+            SPORT_LEAGUES_ALL_DICT[league_name] = league_info
+
+
+
+if __name__ == "__main__":
+    print(SPORT_MEMBERS_ALL_DIC.get('乔尔·恩比德'))
+    print(SPORT_TEAMS_ALL_DICT.get('同曦'))
+    print(SPORT_TEAMS_ALL_DICT.get('火箭'))
+    print(SPORT_TEAMS_ALL_DICT.get('拜仁慕尼黑'))
+    print(SPORT_LEAGUES_ALL_DICT.keys())
+
 

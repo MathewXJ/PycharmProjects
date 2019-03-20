@@ -87,3 +87,12 @@ INDEX_SX_APP_CONTENT_PATH = join(model_user_dict_path, 'index_sx_app_content')
 
 # 内容类-内容名
 INDEX_SX_APP_CONTENT_NAME_PATH = join(model_user_dict_path, 'index_sx_app_content_name')
+
+# 体育类-球队相关
+SPORT_TEAMS_ALL_PATH = join(model_user_dict_path, 'sport_teams_all')
+
+# 体育类-队员相关
+SPORT_MEMBERS_ALL_PATH = join(model_user_dict_path, 'sport_members_all')
+
+#体育类-联赛相关
+SPORT_LEAGUES_ALL_PATH = join(model_user_dict_path, 'sport_leagues_all')

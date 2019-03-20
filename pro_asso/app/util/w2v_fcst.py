@@ -4,7 +4,7 @@ from gensim.similarities.index import AnnoyIndexer
 import os
 from app.common.config import model_path
 from app.util.pre_model import W2V_VOCABULARY_SET, VOCABULARY_SET
-from app.util.remove_utils import remove_notsports
+from app.util.remove_utils import remove_not_sports
 
 # 加载model目录下指定模型
 path_to_model = os.path.join(model_path, 'word2vec')
@@ -19,7 +19,7 @@ annoy_indexer_100.model = model
 
 
 # 使用模型计算输入词组
-# 2018-03-08 使用indexer尝试解决cpu占用问题
+# 2018-03-08 使用indexer解决cpu占用问题
 def associate_words(words, cont_type, with_model=model, top_n=10):
     words = [w.strip() for w in words]
     words = list(filter(lambda x: x in VOCABULARY_SET, words))
@@ -39,7 +39,7 @@ def associate_words(words, cont_type, with_model=model, top_n=10):
     if cont_type == 'sports':
         for w, sim in tops:
             res[w] = sim
-        res = remove_notsports(res)
+        res = remove_not_sports(res)
     else:
         for w, sim in tops:
             if w in W2V_VOCABULARY_SET:

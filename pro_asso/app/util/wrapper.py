@@ -1,9 +1,10 @@
-from app.util.pre_model import RESOURCES_NET_KEYS_SET, INDEX_SX_APP_CONTENT_DICT, INDEX_SX_APP_CONTNAME_SET, ALL_STAR_NAME_SET
+from app.util.pre_model import RESOURCES_NET_KEYS_SET, INDEX_SX_APP_CONTENT_DICT, INDEX_SX_APP_CONTNAME_SET, \
+    ALL_STAR_NAME_SET, SPORT_LEAGUES_ALL_DICT
 from app.util.resources_net import resources_net
 from app.util.douban_works_info import douban_works_info
 from app.util.constants import DATA_FIELD_CONTDISPLAYTYPE_DICT
 from app.util.w2v_fcst import associate_words
-from app.util.remove_utils import remove_not_conts,remove_not_people
+from app.util.remove_utils import remove_not_conts, remove_not_people, is_sports_member, is_sports_team
 import re
 
 
@@ -46,8 +47,6 @@ def get_sort3(kws):
     return _get_words_dic(dic_list)
 
 
-
-
 # 输入：内容名称
 # 返回：该内容在搜索表中的关联信息
 # 例如一级分类、主演、导演、主持、嘉宾
@@ -82,8 +81,8 @@ def get_rlt4contents(kws):
     return rlt
 
 
-# 根据作品，获得相关作品
-# 豆瓣数据
+# 根据作品，获得相关作品及概率
+# 来源：豆瓣数据
 def get_asso_contents(kws):
     kws = [w.strip() for w in kws if w.strip() in INDEX_SX_APP_CONTNAME_SET]
     if len(kws) == 0:
@@ -102,8 +101,8 @@ def get_asso_contents(kws):
     return remove_not_conts(out)
 
 
-
-# 根据人名，获取相关的人名，不超过三个
+# 根据人名，求相关的人名及概率
+# 不超过三个
 def get_asso_people(kws):
     kws = [w.strip() for w in kws if w.strip() in ALL_STAR_NAME_SET]
     if len(kws) == 0:
@@ -111,6 +110,7 @@ def get_asso_people(kws):
     peoples = remove_not_people(associate_words(kws, "not-sports"))
     out = limit_people_num(peoples, 3)
     return out
+
 
 # 限制人名个数
 def limit_people_num(peoples, num):
@@ -121,6 +121,66 @@ def limit_people_num(peoples, num):
     return out
 
 
+# 根据包含的联赛名，求相关信息及概率
+def get_asso_sports_league(kws):
+    leagues = [w.strip() for w in kws if w.strip() in SPORT_LEAGUES_ALL_DICT]
+    if not leagues:
+        return {}
+    out = {}
+    for league_name in leagues:
+        out[league_name] = 1.2
+    return out
+
+
+# 根据包含的球队名，求相关信息及概率
+def get_asso_sports_team(kws):
+    teams = []
+    for w in kws:
+        if w.strip():
+            tmp = is_sports_team(w.strip())
+            if tmp[0]:
+                teams.append(tmp)
+    if not teams:
+        return {}
+    out = {}
+    for team in teams:
+        name = team[0]
+        league_name = team[1].get('leagueName')
+        key_members = []
+        if team[1].get('key_members'):
+            key_members = team[1].get('key_members').split('|')
+        out[league_name] = 1.2
+        out[name] = 1.1
+        if len(key_members) > 0:
+            for i in range(len(key_members)):
+                out[key_members[i]] = 1.09 - i * 0.01
+    return out
+
+
+# 根据包含的人名，求相关信息及概率
+def get_asso_sports_member(kws):
+    members = []
+    for w in kws:
+        if w.strip():
+            tmp = is_sports_member(w.strip())
+            if tmp[0]:
+                members.append(tmp)
+    if not members:
+        return {}
+    out = {}
+    team_names = []
+    for member in members:
+        name = member[0]
+        league_name = member[1].get('leagueName')
+        out[league_name] = 1.2
+        out[name] = 1.1
+        team_names.append(member[1].get('teamName'))
+    out.update(get_asso_sports_team(team_names))
+    return out
+
+
 if __name__ == "__main__":
-    str = ['哈哈农夫']
-    print(get_asso_contents(str))
+    str = ['哈登','得分','火箭队','NBA']
+    print(get_asso_sports_team(str))
+    print(get_asso_sports_member(str))
+    print(get_asso_sports_league(str))
