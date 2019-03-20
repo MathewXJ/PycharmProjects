@@ -60,22 +60,23 @@ def get_asso_rlt_sports(cont):
     res_dic = {}
     # 直接提取输入中的关键字列表
     kws = sje.keywords_extract(cont)
+
+    kws_extend = kws[:]
+    kws_extend.extend(sje.keywords_analyse(cont))
+    kws_extend = list(set(kws_extend))
+    kws_new = sje.distinct_words(kws_extend)
+    kws_new = [w.strip() for w in kws_new if predict(w) == 'sports']
+
     # 提取关键字中联赛名及相关信息
-    res_dic.update(get_asso_sports_league(kws))
+    res_dic.update(get_asso_sports_league(kws_new))
     # 提取关键字中队名及相关信息
-    res_dic.update(get_asso_sports_team(kws))
+    res_dic.update(get_asso_sports_team(kws_new))
     # 提取关键字中运动员名及相关信息
-    res_dic.update(get_asso_sports_member(kws))
+    res_dic.update(get_asso_sports_member(kws_new))
 
     if len(res_dic) < 4:
-        for k, v in (dict(get_sort3(kws))).items():
+        for k, v in (dict(get_sort3(kws_new))).items():
             res_dic[k] = v
-
-        kws_extend = kws[:]
-        kws_extend.extend(sje.keywords_analyse(cont))
-        kws_extend = list(set(kws_extend))
-        kws_new = sje.distinct_words(kws_extend)
-        kws_new = [w.strip() for w in kws_new if predict(w) == 'sports']
 
         res_dic.update(wf.associate_words(kws_new, 'sports'))
         res_dic = remove_not_sports(res_dic)
