@@ -19,7 +19,7 @@ def health():
     return Response(json.dumps(result), mimetype='application/json')
 
 
-@webapp.route('/togth', methods=['GET'])
+@webapp.route('/togth', methods=['GET', 'POST'])
 def togth_handler():
     try:
         start = time.time()
