@@ -1,6 +1,6 @@
 from app.util.pre_model import SPORTS_KEYWORDS_REMOVE_SET, INDEX_SX_APP_CONTNAME_SET, ALL_STAR_NAME_SET, \
     SPORT_MEMBERS_ALL_DIC, SPORT_TEAMS_ALL_DICT
-#from app.classify import predict
+from app.classify import predict
 import time
 
 

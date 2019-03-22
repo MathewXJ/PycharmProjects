@@ -3,7 +3,7 @@ from app.util.pre_model import RESOURCES_NET_KEYS_SET, INDEX_SX_APP_CONTENT_DICT
 from app.util.resources_net import resources_net
 from app.util.douban_works_info import douban_works_info
 from app.util.constants import DATA_FIELD_CONTDISPLAYTYPE_DICT
-#from app.util.w2v_fcst import associate_words
+from app.util.w2v_fcst import associate_words
 from app.util.remove_utils import remove_not_conts, remove_not_people, is_sports_member, is_sports_team
 import re
 
