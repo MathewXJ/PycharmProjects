@@ -80,6 +80,7 @@ def get_asso_rlt_sports(cont):
             res_dic_team.update(get_asso_sports_team(kws_new, league_name))
     else:
         res_dic_team.update(get_asso_sports_team(kws_new))
+    res_dic.update(res_dic_team)
 
     # 提取关键字中运动员名及相关信息
     res_dic.update(get_asso_sports_member(kws_new))
