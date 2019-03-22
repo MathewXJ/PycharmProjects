@@ -91,11 +91,12 @@ def get_asso_rlt_sports(cont):
 
         res_dic.update(wf.associate_words(kws_new, 'sports'))
         res_dic = remove_not_sports(res_dic)
-    #去小写例如nba，只保留NBA
+    #去小写例如nba，只保留NBA;
+    res_dic_last = {}
     for key, value in res_dic.items():
         key = key.upper()
-        res_dic[key] = value
-    return res_dic
+        res_dic_last[key] = value
+    return res_dic_last
 
 
 # def get_asso_rlt_sports(cont):
