@@ -1,5 +1,5 @@
 from app.util.pre_model import SPORTS_KEYWORDS_REMOVE_SET, INDEX_SX_APP_CONTNAME_SET, ALL_STAR_NAME_SET, \
-    SPORT_MEMBERS_ALL_DIC, SPORT_TEAMS_ALL_DICT
+    SPORT_MEMBERS_ALL_DIC, SPORT_TEAMS_ALL_DICT, SPORT_LEAGUES_ALL_DICT
 from app.classify import predict
 import time
 
@@ -88,6 +88,22 @@ def is_sports_team(input_word, league_name=None):
                     output_word = info.get('WholeName')
                 break
     return output_word, output_info
+
+
+# 判断输入词是否是联赛名（包括缩写或者全名）
+# 返回联赛名及相关信息
+def is_sports_league(input_word):
+    output_word = ''
+    output_info = {}
+    for name, info in SPORT_LEAGUES_ALL_DICT.items():
+        alias = info.get('alias')
+        alias.add(name)
+        if input_word in alias:
+            output_info = info
+            output_word = name
+            break
+    return output_word, output_info
+
 
 
 # 筛除非体育人名结果

@@ -221,7 +221,8 @@ if __name__ == "__main__":
     cont = '18/19赛季NBA常规赛全场回放：马刺112:105独行侠（20190313）'
     cont = '小女花不弃:林依晨张彬彬上演虐恋情深，莲花夫妇锁了！'
     cont = '妻子的浪漫旅行2'
-    cont = '小女花不弃'
+    cont = '中国男排超级联赛，上海VS北京'
+    #cont = '上海VS北京,上海开局接连发球直接得分，梅开二度'
     print([w for w in analyse.extract_tags(cont, topK=10)])
     kws = keywords_extract(cont)
     kws_extend = kws[:]

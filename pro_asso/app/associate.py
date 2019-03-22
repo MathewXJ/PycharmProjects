@@ -66,11 +66,9 @@ def get_asso_rlt_sports(cont):
     kws_extend = list(set(kws_extend))
     kws_new = sje.distinct_words(kws_extend)
 
-    print("kws_new:",kws_new)
     # 提取关键字中联赛名及相关信息
     res_dic_league = get_asso_sports_league(kws_new)
     res_dic.update(res_dic_league)
-    print("(1) get res_dic_league:",res_dic)
 
     # 提取关键字中队名及相关信息
     # 根据是否获取到联赛名进行不同处理
@@ -79,15 +77,12 @@ def get_asso_rlt_sports(cont):
     if len(league_names) > 0:
         for league_name in league_names:
             res_dic_team.update(get_asso_sports_team(kws_new, league_name))
-        print("(2-1) get res_dic_team:", res_dic_team)
     else:
         res_dic_team.update(get_asso_sports_team(kws_new))
-        print("(2-2) get res_dic_team:", res_dic_team)
     res_dic.update(res_dic_team)
 
     # 提取关键字中运动员名及相关信息
     res_dic.update(get_asso_sports_member(kws_new))
-    print("(3) get res_dic_member:", res_dic)
 
     # 数量不够再使用模型预测
     res_dic_predict = {}

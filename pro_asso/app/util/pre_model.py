@@ -116,6 +116,10 @@ with open(SPORT_TEAMS_ALL_PATH, 'r', encoding='utf-8') as fr:
             if league_type == 'VOLLEYBALL':
                 team_info['leagueName'] = line.get("leagueName")
                 team_info['WholeName'] = alias_str.split('|')[0]
+                if line.get("leagueName") == "男排联赛":
+                    alias.add(team_name + "男排")
+                if line.get("leagueName") == "女排联赛":
+                    alias.add(team_name + "女排")
             if league_type == 'NBA':
                 team_info['leagueName'] = league_type
                 team_info['WholeName'] = line.get("city") + team_name
@@ -138,6 +142,11 @@ with open(SPORT_LEAGUES_ALL_PATH, 'r', encoding='utf-8') as fr:
         if line:
             league_info = {}
             league_name = line.get("name")
+            alias_str = line.get("alias")
+            alias = set()
+            if alias_str:
+                alias = set(alias_str.split('|'))
+            league_info['alias'] = alias
             SPORT_LEAGUES_ALL_DICT[league_name] = league_info
 
 
@@ -146,7 +155,7 @@ if __name__ == "__main__":
     print(SPORT_MEMBERS_ALL_DIC.get('乔尔·恩比德'))
     print(SPORT_TEAMS_ALL_DICT.get('CBA|同曦'))
     print(SPORT_TEAMS_ALL_DICT.get('NBA|火箭'))
-    print(SPORT_TEAMS_ALL_DICT.get('拜仁慕尼黑'))
+    print(SPORT_TEAMS_ALL_DICT.get('男排联赛|上海'))
     print(SPORT_LEAGUES_ALL_DICT.keys())
 
 

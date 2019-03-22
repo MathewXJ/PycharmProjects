@@ -4,7 +4,7 @@ from app.util.resources_net import resources_net
 from app.util.douban_works_info import douban_works_info
 from app.util.constants import DATA_FIELD_CONTDISPLAYTYPE_DICT
 from app.util.w2v_fcst import associate_words
-from app.util.remove_utils import remove_not_conts, remove_not_people, is_sports_member, is_sports_team
+from app.util.remove_utils import remove_not_conts, remove_not_people, is_sports_member, is_sports_team, is_sports_league
 import re
 
 
@@ -123,11 +123,17 @@ def limit_people_num(peoples, num):
 
 # 根据包含的联赛名，求相关信息及概率
 def get_asso_sports_league(kws):
-    leagues = [w.strip() for w in kws if w.strip() in SPORT_LEAGUES_ALL_DICT]
+    leagues = []
+    for w in kws:
+        if w.strip():
+            tmp = is_sports_league(w.strip())
+            if tmp[0]:
+                leagues.append(tmp)
     if not leagues:
         return {}
     out = {}
-    for league_name in leagues:
+    for league in leagues:
+        league_name = league[0]
         out[league_name] = 1.2
     return out
 
@@ -180,7 +186,8 @@ def get_asso_sports_member(kws):
 
 
 if __name__ == "__main__":
-    str = ['哈登','得分','江苏队','NBA']
-    print(get_asso_sports_team(str))
-    print(get_asso_sports_member(str))
+    str = ['北京', '梅开二度', 'VS', '上海','男排联赛']
     print(get_asso_sports_league(str))
+    print(get_asso_sports_team(str))
+    # print(get_asso_sports_member(str))
+
