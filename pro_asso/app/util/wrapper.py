@@ -3,7 +3,7 @@ from app.util.pre_model import RESOURCES_NET_KEYS_SET, INDEX_SX_APP_CONTENT_DICT
 from app.util.resources_net import resources_net
 from app.util.douban_works_info import douban_works_info
 from app.util.constants import DATA_FIELD_CONTDISPLAYTYPE_DICT
-from app.util.w2v_fcst import associate_words
+#from app.util.w2v_fcst import associate_words
 from app.util.remove_utils import remove_not_conts, remove_not_people, is_sports_member, is_sports_team
 import re
 
@@ -133,11 +133,11 @@ def get_asso_sports_league(kws):
 
 
 # 根据包含的球队名，求相关信息及概率
-def get_asso_sports_team(kws):
+def get_asso_sports_team(kws, league_name=None):
     teams = []
     for w in kws:
         if w.strip():
-            tmp = is_sports_team(w.strip())
+            tmp = is_sports_team(w.strip(), league_name)
             if tmp[0]:
                 teams.append(tmp)
     if not teams:
@@ -180,7 +180,7 @@ def get_asso_sports_member(kws):
 
 
 if __name__ == "__main__":
-    str = ['哈登','得分','火箭队','NBA']
+    str = ['哈登','得分','江苏队','NBA']
     print(get_asso_sports_team(str))
     print(get_asso_sports_member(str))
     print(get_asso_sports_league(str))

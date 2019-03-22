@@ -100,7 +100,7 @@ with open(SPORT_TEAMS_ALL_PATH, 'r', encoding='utf-8') as fr:
         if line:
             team_info = {}
             team_name = line.get("name")
-            # 别名-除alias字段外，队名加“队”字
+            # 别名-除alias字段外，队名加“队”字也作为别名
             alias_str = line.get("alias")
             alias = set()
             if alias_str:
@@ -113,6 +113,9 @@ with open(SPORT_TEAMS_ALL_PATH, 'r', encoding='utf-8') as fr:
             if league_type == 'CBA':
                 team_info['leagueName'] = league_type
                 team_info['WholeName'] = alias_str.split('|')[0]
+            if league_type == 'VOLLEYBALL':
+                team_info['leagueName'] = line.get("leagueName")
+                team_info['WholeName'] = alias_str.split('|')[0]
             if league_type == 'NBA':
                 team_info['leagueName'] = league_type
                 team_info['WholeName'] = line.get("city") + team_name
@@ -123,7 +126,8 @@ with open(SPORT_TEAMS_ALL_PATH, 'r', encoding='utf-8') as fr:
             team_info['alias'] = alias
             team_info['key_members'] = line.get('key_members')
 
-            SPORT_TEAMS_ALL_DICT[team_name] = team_info
+            # 队名类似“北京”有多个联赛的队伍，会覆盖，加上联赛名作为字典的key
+            SPORT_TEAMS_ALL_DICT[team_info['leagueName'] + '|' + team_name] = team_info
 
 
 # 联赛名及相关信息
@@ -140,8 +144,8 @@ with open(SPORT_LEAGUES_ALL_PATH, 'r', encoding='utf-8') as fr:
 
 if __name__ == "__main__":
     print(SPORT_MEMBERS_ALL_DIC.get('乔尔·恩比德'))
-    print(SPORT_TEAMS_ALL_DICT.get('同曦'))
-    print(SPORT_TEAMS_ALL_DICT.get('火箭'))
+    print(SPORT_TEAMS_ALL_DICT.get('CBA|同曦'))
+    print(SPORT_TEAMS_ALL_DICT.get('NBA|火箭'))
     print(SPORT_TEAMS_ALL_DICT.get('拜仁慕尼黑'))
     print(SPORT_LEAGUES_ALL_DICT.keys())
 

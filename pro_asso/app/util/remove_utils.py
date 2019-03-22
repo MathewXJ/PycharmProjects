@@ -1,6 +1,6 @@
 from app.util.pre_model import SPORTS_KEYWORDS_REMOVE_SET, INDEX_SX_APP_CONTNAME_SET, ALL_STAR_NAME_SET, \
     SPORT_MEMBERS_ALL_DIC, SPORT_TEAMS_ALL_DICT
-from app.classify import predict
+#from app.classify import predict
 import time
 
 
@@ -64,19 +64,29 @@ def is_sports_member(input_word, **kw):
 
 # 判断输入词是否是队名（包括绰号）
 # 返回队名、相关信息
-def is_sports_team(input_word):
+def is_sports_team(input_word, league_name=None):
     output_word = ''
     output_info = {}
-    for name, info in SPORT_TEAMS_ALL_DICT.items():
+    for key, info in SPORT_TEAMS_ALL_DICT.items():
+        name = key.split('|')[1]
         alias = info.get('alias')
         alias.add(name)
-        if input_word in alias:
-            output_info = info
-            if info.get("leagueType") == 'FOOTBALL':
-                output_word = name
-            else:
-                output_word = info.get('WholeName')
-            break
+        if not league_name:
+            if input_word in alias:
+                output_info = info
+                if info.get("leagueType") == 'FOOTBALL':
+                    output_word = name
+                else:
+                    output_word = info.get('WholeName')
+                break
+        else:
+            if league_name == info.get('leagueName') and input_word in alias :
+                output_info = info
+                if info.get("leagueType") == 'FOOTBALL':
+                    output_word = name
+                else:
+                    output_word = info.get('WholeName')
+                break
     return output_word, output_info
 
 
@@ -106,9 +116,9 @@ if __name__ == "__main__":
     time2 = time.time()
     print("Result: %s , it costs %s ms" % (rlt, (time2 - time1) * 1000))
 
-    word = '雄鹿队'
+    word = '江苏队'
     print(len(SPORT_TEAMS_ALL_DICT))
     time1 = time.time()
-    rlt = is_sports_team(word)
+    rlt = is_sports_team(word,league_name='男排联赛')
     time2 = time.time()
     print("Result: %s , it costs %s ms" % (rlt, (time2 - time1) * 1000))

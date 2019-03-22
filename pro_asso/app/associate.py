@@ -68,9 +68,19 @@ def get_asso_rlt_sports(cont):
     kws_new = [w.strip() for w in kws_new if predict(w) == 'sports']
 
     # 提取关键字中联赛名及相关信息
-    res_dic.update(get_asso_sports_league(kws_new))
+    res_dic_league = get_asso_sports_league(kws_new)
+    res_dic.update(res_dic_league)
+
     # 提取关键字中队名及相关信息
-    res_dic.update(get_asso_sports_team(kws_new))
+    # 根据是否获取到联赛名进行不同处理
+    league_names = list(res_dic_league.keys())
+    res_dic_team = {}
+    if len(league_names) > 0:
+        for league_name in league_names:
+            res_dic_team.update(get_asso_sports_team(kws_new, league_name))
+    else:
+        res_dic_team.update(get_asso_sports_team(kws_new))
+
     # 提取关键字中运动员名及相关信息
     res_dic.update(get_asso_sports_member(kws_new))
 

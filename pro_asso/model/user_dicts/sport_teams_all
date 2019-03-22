@@ -146,3 +146,31 @@
 {"_id":{"$oid":"5c7e26a129e93d11e09d628b"},"leagueName":"德甲","leagueId":"35","teamId":"2677","seasonYear":"18/19","pageUrl":"http://match.sports.sohu.com/SohuSoccer/soccer/team?teamid=2677","mainStadium":"梅赛德斯·奔驰竞技场","coach":"沃尔夫","insertTime":"2019-03-05 17:55:55","name":"斯图加特","leagueType":"FOOTBALL","id":"1003860C" ,"key_members":""}
 {"_id":{"$oid":"5c7e26a129e93d11e09d628c"},"leagueName":"德甲","leagueId":"35","teamId":"2541","seasonYear":"18/19","pageUrl":"http://match.sports.sohu.com/SohuSoccer/soccer/team?teamid=2541","mainStadium":"汉诺威HDI竞技场","coach":"布雷滕雷特","insertTime":"2019-03-05 17:55:55","name":"汉诺威","leagueType":"FOOTBALL","id":"1003861C" ,"key_members":""}
 {"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"德甲","leagueId":"35","teamId":"2523","seasonYear":"18/19","pageUrl":"http://match.sports.sohu.com/SohuSoccer/soccer/team?teamid=2523","mainStadium":"","coach":"科尔纳","insertTime":"2019-03-05 17:55:55","name":"纽伦堡","leagueType":"FOOTBALL","id":"1003862C" ,"key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"男排联赛","leagueId":"36","name":"上海","alias":"上海金色年华男排|上海金色年华|上海金色年华男子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"男排联赛","leagueId":"36","name":"北京","alias":"北京汽车男排|北京汽车|北京汽车男子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"男排联赛","leagueId":"36","name":"江苏","alias":"江苏南京广电猫猫男排|江苏南京广电猫猫男子排球队|江苏南京广电猫猫","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"男排联赛","leagueId":"36","name":"山东","alias":"山东体彩男排|山东体彩男子排球队|山东体彩","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"男排联赛","leagueId":"36","name":"八一","alias":"八一南昌男排|八一南昌|八一南昌男子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"男排联赛","leagueId":"36","name":"四川","alias":"四川男排|四川男子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"男排联赛","leagueId":"36","name":"浙江","alias":"浙江体彩男排|浙江体彩|浙江体彩男子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"男排联赛","leagueId":"36","name":"河南","alias":"河南天冠男排|河南天冠|河南天冠男子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"男排联赛","leagueId":"36","name":"天津","alias":"天津全运村男排|天津全运村|天津全运村男子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"男排联赛","leagueId":"36","name":"广东","alias":"广东深圳保安贺杰男排|广东深圳保安贺杰|广东深圳保安贺杰男子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"男排联赛","leagueId":"36","name":"辽宁","alias":"辽宁营口鲅鱼圈男排|辽宁营口鲅鱼圈|辽宁营口鲅鱼圈男子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"男排联赛","leagueId":"36","name":"福建","alias":"福建师范大学男排|福建师范大学|福建师范大学男子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"男排联赛","leagueId":"36","name":"河北","alias":"河北男排|河北男子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"男排联赛","leagueId":"36","name":"湖北","alias":"湖北男排|湖北男子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"女排联赛","leagueId":"37","name":"北京","alias":"北京汽车女排|北京汽车|北京汽车女子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"女排联赛","leagueId":"37","name":"天津","alias":"天津渤海银行女排|天津渤海银行|天津渤海银行女子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"女排联赛","leagueId":"37","name":"上海","alias":"上海光明优倍女排|上海光明优倍|上海光明优倍女子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"女排联赛","leagueId":"37","name":"江苏","alias":"江苏中天钢铁女排|江苏中天钢铁|江苏中天钢铁女子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"女排联赛","leagueId":"37","name":"辽宁","alias":"辽宁营口鲅鱼圈女排|辽宁营口鲅鱼圈|辽宁营口鲅鱼圈女子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"女排联赛","leagueId":"37","name":"山东","alias":"山东体彩女排|山东体彩|山东体彩女子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"女排联赛","leagueId":"37","name":"广东","alias":"广东恒大女排|广东恒大|广东恒大女子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"女排联赛","leagueId":"37","name":"福建","alias":"福建安溪铁观音女排|福建安溪铁观音|福建安溪铁观音女子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"女排联赛","leagueId":"37","name":"八一","alias":"八一南昌女排|八一南昌|八一南昌女子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"女排联赛","leagueId":"37","name":"河南","alias":"河南银鸽投资女排|河南银鸽投资|河南银鸽投资女子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"女排联赛","leagueId":"37","name":"浙江","alias":"浙江嘉善西塘古镇女排|浙江嘉善西塘古镇|浙江嘉善西塘古镇女子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"女排联赛","leagueId":"37","name":"云南","alias":"云南大学滇池学院女排|云南大学滇池学院|云南大学滇池学院女子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"女排联赛","leagueId":"37","name":"四川","alias":"四川女排|四川女子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"女排联赛","leagueId":"37","name":"河北","alias":"河北女排|河北女子排球队","leagueType":"VOLLEYBALL","key_members":""}
