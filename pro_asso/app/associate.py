@@ -65,7 +65,7 @@ def get_asso_rlt_sports(cont):
     kws_extend.extend(sje.keywords_analyse(cont))
     kws_extend = list(set(kws_extend))
     kws_new = sje.distinct_words(kws_extend)
-    kws_new = [w.strip() for w in kws_new if predict(w) == 'sports']
+
     print("kws_new:",kws_new)
     # 提取关键字中联赛名及相关信息
     res_dic_league = get_asso_sports_league(kws_new)
@@ -92,6 +92,7 @@ def get_asso_rlt_sports(cont):
     # 数量不够再使用模型预测
     res_dic_predict = {}
     if len(res_dic) < 3:
+        kws_new = [w.strip() for w in kws_new if predict(w) == 'sports']
         for k, v in (dict(get_sort3(kws_new))).items():
             res_dic_predict[k] = v
         res_dic_predict.update(wf.associate_words(kws_new, 'sports'))
