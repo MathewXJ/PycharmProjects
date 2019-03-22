@@ -85,12 +85,15 @@ def get_asso_rlt_sports(cont):
     # 提取关键字中运动员名及相关信息
     res_dic.update(get_asso_sports_member(kws_new))
 
-    if len(res_dic) < 4:
+    # 数量不够再使用模型预测
+    res_dic_predict = {}
+    if len(res_dic) < 3:
         for k, v in (dict(get_sort3(kws_new))).items():
-            res_dic[k] = v
+            res_dic_predict[k] = v
+        res_dic_predict.update(wf.associate_words(kws_new, 'sports'))
+        res_dic_predict = remove_not_sports(res_dic_predict)
+    res_dic.update(res_dic_predict)
 
-        res_dic.update(wf.associate_words(kws_new, 'sports'))
-        res_dic = remove_not_sports(res_dic)
     #去小写例如nba，只保留NBA;
     res_dic_last = {}
     for key, value in res_dic.items():
