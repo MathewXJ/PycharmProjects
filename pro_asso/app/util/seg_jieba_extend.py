@@ -44,7 +44,7 @@ def keywords_extract(content):
 
 
 # 获取jieba分词结果，供模型计算用
-def keywords_analyse(content, top_n=10):
+def keywords_analyse(content, top_n=30):
     # 使用jieba重新分词（不做key限制）
     kws = [w for w in analyse.extract_tags(content, topK=top_n)]
     return distinct_words(kws)
@@ -222,8 +222,10 @@ if __name__ == "__main__":
     cont = '小女花不弃:林依晨张彬彬上演虐恋情深，莲花夫妇锁了！'
     cont = '妻子的浪漫旅行2'
     cont = '中国男排超级联赛，上海VS北京'
+    cont = '18/19赛季CBA常规赛第46轮全场回放：上海124：89福建（荆超、陈正昊）'
     #cont = '上海VS北京,上海开局接连发球直接得分，梅开二度'
-    print([w for w in analyse.extract_tags(cont, topK=10)])
+    cont = '《冷枪手》特工队血腥护宝再掀谍战风云'
+    print([w for w in analyse.extract_tags(cont, topK=30)])
     kws = keywords_extract(cont)
     kws_extend = kws[:]
     print('原提取结果：', kws)
