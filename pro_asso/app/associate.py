@@ -25,32 +25,31 @@ def get_asso_rlt(cont):
 
 # 非体育类
 # 规则：若含内容，推荐相关内容；若含人名，推荐相关人名（限制三个）
+# 先提取《》中内容，并不再使用常量字典的结果
 def get_asso_rlt_not_sports(cont):
     res_dic = {}
+    # 提取《》中内容
+    cont_names = sje.get_book_title(cont)[0]
+    cont = sje.get_book_title(cont)[1]
 
-    # 直接提取输入中的关键字列表
+    # 提取关键词jieba+flashtext
     kws = sje.keywords_extract(cont)
-    # 取常量字典中关键词对应结果
-    for k, v in (dict(get_sort3(kws))).items():
-        res_dic[k] = v
-    # 过滤内容结果
-    res_dic_contents = remove_not_conts(res_dic)
-    # 过滤人名结果
-    res_dic_people = remove_not_people(res_dic)
+    kws.extend(sje.keywords_analyse(cont))
+    kws = list(set(kws))
+    kws_new = sje.distinct_words(kws)
 
-    kws_extend = kws[:]
-    kws_extend.extend(sje.keywords_analyse(cont))
-    kws_extend = list(set(kws_extend))
-    kws_new = sje.distinct_words(kws_extend)
+    # 求内容相关
+    if cont_names:
+        res_dic_contents = get_asso_contents(cont_names)
+    else:
+        res_dic_contents = get_asso_contents(kws_new)
 
-    # 加入豆瓣相关内容
-    res_dic_contents.update(get_asso_contents(kws_new))
-    # 加入模型结算的相关人名
-    res_dic_people.update(get_asso_people(kws_new))
+    # 求人名相关
+    res_dic_people = get_asso_people(kws_new)
 
     # 合并结果
     res_dic_contents.update(limit_people_num(res_dic_people, 3))
-    res_dic = res_dic_contents
+    res_dic.update(res_dic_contents)
 
     return res_dic
 
@@ -112,7 +111,17 @@ def get_asso_rlt_sports(cont):
 #     # 取常量字典中关键词对应结果
 #     for k, v in (dict(get_sort3(kws))).items():
 #         res_dic[k] = v
-#
+
+
+#         # 取常量字典中内容名对应结果
+#     for k, v in (dict(get_sort3(cont_name))).items():
+#         res_dic[k] = v
+#     # 过滤内容结果
+#     res_dic_contents = remove_not_conts(res_dic)
+#     # 过滤人名结果
+#     res_dic_people = remove_not_people(res_dic)
+
+
 #     time2 = time.time()
 #     # print("(1) keywords extract result : {},  costs : {} ms".format(res_dic, (time2 - time1) * 1000))
 #

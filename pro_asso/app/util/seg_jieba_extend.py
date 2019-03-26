@@ -6,6 +6,7 @@ from jieba import analyse, load_userdict
 from app.util.pre_model import RESOURCES_NET_KEYS, USER_STOP, INDEX_SX_APP_CONTNAME_SET
 from flashtext import KeywordProcessor
 from app.common.config import W2V_VOCABULARY_PATH, ALL_STAR_NAME_PATH, INDEX_SX_APP_CONTENT_NAME_PATH, USER_DIC_PATH
+import re
 
 # 导入关键字
 resources_net_processor = KeywordProcessor()
@@ -65,6 +66,18 @@ def distinct_words(words):
         else:
             rlt.append(w)
     return rlt
+
+
+# 提取《》内的内容
+# 返回(r1,r2) r1为书名号中内容组成的列表，r2其它字符串拼接后的字符串
+# 《爸爸去哪儿2》此种节目名并不规范，需要去除数字2
+def get_book_title(input_str):
+    pattern = r'《.*?》'
+    tmp_list = [w.strip('《》') for w in re.findall(pattern, input_str)]
+    cont_list = [''.join(re.split(r'\d+$', w)) for w in tmp_list]
+    output_str = ''.join(re.split(pattern, input_str))
+    return cont_list, output_str
+
 
 
 # print( [w for w in  analyse.extract_tags('大江大河') if w in RESOURCES_NET_KEYS ]   )
@@ -225,6 +238,10 @@ if __name__ == "__main__":
     cont = '18/19赛季CBA常规赛第46轮全场回放：上海124：89福建（荆超、陈正昊）'
     #cont = '上海VS北京,上海开局接连发球直接得分，梅开二度'
     cont = '《冷枪手》特工队血腥护宝再掀谍战风云'
+
+    content_names = get_book_title(cont)[0]
+    cont_left = get_book_title(cont)[1]
+    print(content_names)
     print([w for w in analyse.extract_tags(cont, topK=30)])
     kws = keywords_extract(cont)
     kws_extend = kws[:]
