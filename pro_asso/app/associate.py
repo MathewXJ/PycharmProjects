@@ -17,7 +17,7 @@ def get_asso_rlt(cont):
     cont_type = predict(cont)
     res_dic = {}
     if cont_type == 'sports':
-        res_dic = get_asso_rlt_sports(cont)
+        res_dic = get_asso_rlt_sports(cont, None)
     else:
         res_dic = get_asso_rlt_not_sports(cont)
     return res_dic
