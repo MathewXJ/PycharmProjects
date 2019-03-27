@@ -88,3 +88,11 @@ DATA_FIELD_CONTDISPLAYTYPE_DICT = {'1000': '电影',
                                    '601001': '资讯',
                                    '800000': 'UGC',
                                    '100001': '节目单'}
+
+# 项目名称与leagueType对应关系字典
+MEDIA_PROJ_DICT = {'足球': 'BASKETBALL',
+                   '篮球': '电视剧',
+                   '排球': 'FOOTBALL',
+                   '乒乓': 'PINGPONG',
+                   '田径': 'ATHLETICS ',
+                   '羽毛球': 'BADMINTON', }

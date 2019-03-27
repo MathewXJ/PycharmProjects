@@ -4,8 +4,9 @@ from app.util.resources_net import resources_net
 from app.util.douban_works_info import douban_works_info
 from app.util.constants import DATA_FIELD_CONTDISPLAYTYPE_DICT
 from app.util.w2v_fcst import associate_words
+from app.util import constants
 from app.util.remove_utils import remove_not_conts, remove_not_people, is_sports_member, is_sports_team, is_sports_league
-import re
+import re, random
 
 
 # 以关键词作为key，从常量字典中获取value
@@ -83,6 +84,7 @@ def get_rlt4contents(kws):
 
 # 根据作品，获得相关作品及概率
 # 来源：豆瓣数据
+# 新增使用resources_net结果
 def get_asso_contents(kws):
     kws = [w.strip() for w in kws if w.strip() in INDEX_SX_APP_CONTNAME_SET]
     if len(kws) == 0:
@@ -97,7 +99,10 @@ def get_asso_contents(kws):
             for i in range(len(asso_conts)):
                 asso_cont = re.split('[ ·]', asso_conts[i])
                 asso_cont = ''.join(asso_cont)
-                out[asso_cont] = 1.1 - i * 0.01
+                out[asso_cont] = 1.1 - i * 0.001
+    if not out:
+        for k, v in (dict(get_sort3(kws))).items():
+            out[k] = v
     return remove_not_conts(out)
 
 
@@ -108,33 +113,56 @@ def get_asso_people(kws):
     if len(kws) == 0:
         return {}
     peoples = remove_not_people(associate_words(kws, "not-sports"))
-    out = limit_people_num(peoples, 3)
+    out = limit_dict_num(peoples, 3)
     return out
 
 
-# 限制人名个数
-def limit_people_num(peoples, num):
+# 根据人名，求人名近期作品概率（处理接口starContent对象）
+# 不超过五个
+def get_star_contents(opus):
+    if len(opus) == 0:
+        return {}
     out = {}
-    peoples_lst = list(peoples.keys())
-    for people in peoples_lst[0:num]:
-        out[people] = peoples[people]
+    for i in range(len(opus)):
+        cont_name = opus[i].get(constants.DATA_FIELD_CONTNAME)
+        out[cont_name] = 1.1 - i * 0.01
+    out = limit_dict_num(out, 4)
+    return out
+
+
+# 限制字典结果个数
+def limit_dict_num(input_dict, num):
+    out = {}
+    keys = list(input_dict.keys())
+    for k in keys[0:num]:
+        out[k] = input_dict[k]
     return out
 
 
 # 根据包含的联赛名，求相关信息及概率
-def get_asso_sports_league(kws):
+# 新增参数项目名，若输入中不含联赛名且项目名非空，则返回该项目下任意赛事
+def get_asso_sports_league(kws, media_proj=None):
+    leagues_all = []
+    if media_proj:
+        league_type = constants.MEDIA_PROJ_DICT.get(media_proj)
+        for name, info in SPORT_LEAGUES_ALL_DICT.items():
+            if info.get("leagueType") == league_type:
+                leagues_all.append(name)
     leagues = []
     for w in kws:
         if w.strip():
             tmp = is_sports_league(w.strip())
             if tmp[0]:
                 leagues.append(tmp)
-    if not leagues:
-        return {}
     out = {}
-    for league in leagues:
-        league_name = league[0]
-        out[league_name] = 1.2
+    if leagues: # 推荐关联出的联赛名
+        for league in leagues:
+            league_name = league[0]
+            out[league_name] = 1.2
+    else:  #无法提取联赛名，则推荐项目名相关联赛
+        if leagues_all:
+            for league_name in random.sample(leagues_all, len(leagues_all)//2 + 1):
+                out[league_name] = 1.2
     return out
 
 

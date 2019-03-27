@@ -142,11 +142,13 @@ with open(SPORT_LEAGUES_ALL_PATH, 'r', encoding='utf-8') as fr:
         if line:
             league_info = {}
             league_name = line.get("name")
+            league_type = line.get("leagueType")
             alias_str = line.get("alias")
             alias = set()
             if alias_str:
                 alias = set(alias_str.split('|'))
             league_info['alias'] = alias
+            league_info['leagueType'] = league_type
             SPORT_LEAGUES_ALL_DICT[league_name] = league_info
 
 
@@ -156,6 +158,6 @@ if __name__ == "__main__":
     print(SPORT_TEAMS_ALL_DICT.get('CBA|同曦'))
     print(SPORT_TEAMS_ALL_DICT.get('NBA|火箭'))
     print(SPORT_TEAMS_ALL_DICT.get('男排联赛|上海'))
-    print(SPORT_LEAGUES_ALL_DICT.keys())
+    print(SPORT_LEAGUES_ALL_DICT)
 
 

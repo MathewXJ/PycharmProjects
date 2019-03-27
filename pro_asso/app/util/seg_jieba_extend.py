@@ -238,7 +238,7 @@ if __name__ == "__main__":
     cont = '18/19赛季CBA常规赛第46轮全场回放：上海124：89福建（荆超、陈正昊）'
     #cont = '上海VS北京,上海开局接连发球直接得分，梅开二度'
     cont = '《冷枪手》特工队血腥护宝再掀谍战风云'
-
+    cont = '盐城响水“3·21”事故：昨夜今晨消防员全力搜救被困人员'
     content_names = get_book_title(cont)[0]
     cont_left = get_book_title(cont)[1]
     print(content_names)
