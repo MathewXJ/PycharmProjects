@@ -118,7 +118,7 @@ def get_asso_people(kws):
 
 
 # 根据人名，求人名近期作品概率（处理接口starContent对象）
-# 不超过五个
+# 不超过四个
 def get_star_contents(opus):
     if len(opus) == 0:
         return {}

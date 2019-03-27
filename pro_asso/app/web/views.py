@@ -43,8 +43,8 @@ def togth_handler_new():
         start = time.time()
         # 获取输入数据对象
         req_data = request.get_data(as_text=True)
+        req_data = json.loads(req_data, encoding='utf-8')
         logger.debug('input content is %s', str(req_data), exc_info=True)
-        req_data = json.loads(req_data)
         if req_data:
             res_dic = get_asso_rlt_json(req_data)
             logger.info("result : {},  costs : {} ms".format(res_dic, (time.time() - start) * 1000))
