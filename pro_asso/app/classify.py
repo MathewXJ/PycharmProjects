@@ -68,7 +68,6 @@ def predict(line):
 
     # 没有匹配到关键词，则送入模型预测
     cont_seg_list = preprocess_data(cont_rinse)
-    print(cont_seg_list)
     if not cont_seg_list:
         return generate_result('uncertain', prob=1.0)
     # label_prob格式：[[('porn', 0.978516), ('normal', 0.0117188), ...]]
