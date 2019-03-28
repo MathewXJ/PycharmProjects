@@ -4,6 +4,7 @@ import fasttext
 # import fastText.FastText as fasttext
 import jieba_fast as jieba
 import numpy as np
+from app.common.utils import dbc2sbc
 from app.common.config import MODEL_FILE_PATH, USER_DIC_PATH, LABEL_PREFIX, RETURN_PROB
 
 jieba.load_userdict(USER_DIC_PATH)
@@ -28,7 +29,8 @@ def rinse_string(sens):
     out_tab = ''.join(np.repeat(' ', len(SYM)))
     tran_tab = cont.maketrans(SYM, out_tab)
     cont = cont.translate(tran_tab).replace(' ', '')
-
+    # 全角转半角
+    cont = dbc2sbc(cont.strip())
     # 大写转小写
     cont = cont.lower()
     return cont
@@ -42,12 +44,12 @@ def cut2list(sentence):
 
 def preprocess_data(content):
     # cont_rinse = rinse_string(content)
-    cont_seg = cut2list(content)
-    if len(cont_seg) == 0:
+    cont_seg_list = cut2list(content)
+    if len(cont_seg_list) == 0:
         print('cut2list return empty : {}'.format(content))
         return None
-    cont_seg_str = ' '.join(cont_seg)
-    return cont_seg_str
+    # cont_seg_str = ' '.join(cont_seg)
+    return cont_seg_list
 
 
 def generate_result(label, prob=0.0):
@@ -63,13 +65,23 @@ def predict(line):
     if cont_rinse in KEYWORDS:
         return generate_result('sports', prob=1.0)
 
-    # 送入模型预测
-    cont_seg_str = preprocess_data(cont_rinse)
-    if not cont_seg_str:
+    # 没有匹配到关键词，则送入模型预测
+    cont_seg_list = preprocess_data(cont_rinse)
+    if not cont_seg_list:
         return generate_result('uncertain', prob=1.0)
     # label_prob格式：[[('porn', 0.978516), ('normal', 0.0117188), ...]]
-    label_prob = classifier.predict_proba([cont_seg_str.strip()])
+    label_prob = classifier.predict_proba([' '.join(cont_seg_list).strip()])
     label_prob = label_prob[0][0]
+    # 整体预测为non-sports，但是每个分词都是体育类的，则强制返回sports
+    if label_prob[0] != 'sports':
+        all_sports_kw = True
+        for w in cont_seg_list:
+            if w not in KEYWORDS:
+                all_sports_kw = False
+                break
+        if all_sports_kw:
+            return generate_result('sports', prob=1.0)
+
     return generate_result(label_prob[0], prob=float(label_prob[1]))
 
 

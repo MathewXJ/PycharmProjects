@@ -23,8 +23,6 @@ def init_log_settings(logger, log_file=LOG_FILE_NAME):
     logger.setLevel(LOG_LEVEL)
 
 
-
-
 def get_param_value(param, data):
     """
     从请求中获取参数值
@@ -36,3 +34,47 @@ def get_param_value(param, data):
         return data[param]
     else:
         return None
+
+
+def dbc2sbc(ustring):
+    """
+    全角转半角
+    全角即：Double Byte Character，简称：DBC
+    半角即：Single Byte Character，简称：SBC
+    :param ustring:
+    :return:
+    """
+    rstring = ''
+    for uchar in ustring:
+        inside_code = ord(uchar)
+        if inside_code == 0x3000:
+            inside_code = 0x0020
+        else:
+            inside_code -= 0xfee0
+        if not (0x0021 <= inside_code <= 0x7e):
+            rstring += uchar
+            continue
+        rstring += chr(inside_code)
+    return rstring
+
+
+def sbc2dbc(ustring):
+    """
+    半角转全角
+    全角即：Double Byte Character，简称：DBC
+    半角即：Single Byte Character，简称：SBC
+    :param ustring:
+    :return:
+    """
+    rstring = ''
+    for uchar in ustring:
+        inside_code = ord(uchar)
+        if inside_code == 0x0020:
+            inside_code = 0x3000
+        else:
+            if not (0x0021 <= inside_code <= 0x7e):
+                rstring += uchar
+                continue
+        inside_code += 0xfee0
+        rstring += chr(inside_code)
+    return rstring
