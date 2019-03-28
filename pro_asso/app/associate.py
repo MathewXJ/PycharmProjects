@@ -98,10 +98,11 @@ def get_asso_rlt_sports(cont, media_proj):
     kws_new = sje.distinct_words(kws_extend)
 
     # 1.提取关键字中联赛名及相关信息
+    # 2.根据传入的项目类型推荐该项目下其它赛事
     res_dic_league = get_asso_sports_league(kws_new, media_proj)
     res_dic.update(res_dic_league)
 
-    # 2.提取关键字中队名及相关信息
+    # 3.提取关键字中队名及相关信息
     # 根据是否获取到联赛名进行不同处理
     league_names = list(res_dic_league.keys())
     res_dic_team = {}
@@ -112,10 +113,8 @@ def get_asso_rlt_sports(cont, media_proj):
         res_dic_team.update(get_asso_sports_team(kws_new))
     res_dic.update(res_dic_team)
 
-    # 3.提取关键字中运动员名及相关信息
+    # 4.提取关键字中运动员名及相关信息
     res_dic.update(get_asso_sports_member(kws_new))
-
-    # 4.根据传入的项目类型推荐该项目下其它赛事
 
     # 5.数量不够再使用模型预测
     res_dic_predict = {}
