@@ -2,13 +2,13 @@
 # -*- coding: UTF-8 -*-
 import collections
 from app.util.wrapper import get_sort3, get_asso_contents, get_asso_people, limit_dict_num, get_asso_sports_league, \
-    get_asso_sports_team, get_asso_sports_member, get_star_contents
+    get_asso_sports_team, get_asso_sports_member, get_star_contents, get_media_proj_leagues
 from app.util import w2v_fcst as wf, seg_jieba_extend as sje
 from app.util import constants
 from app.classify import predict
 import time
 from app.util.pre_model import INDEX_SX_APP_CONTNAME_SET
-from app.util.remove_utils import remove_not_sports, remove_not_conts, remove_not_people
+from app.util.remove_utils import remove_not_sports
 
 
 # 求关联词结果
@@ -98,25 +98,35 @@ def get_asso_rlt_sports(cont, media_proj):
     kws_new = sje.distinct_words(kws_extend)
 
     # 1.提取关键字中联赛名及相关信息
-    # 2.根据传入的项目类型推荐该项目下其它赛事
-    res_dic_league = get_asso_sports_league(kws_new, media_proj)
+    res_dic_league = get_asso_sports_league(kws_new)
     res_dic.update(res_dic_league)
+
+    # 2.根据传入的项目类型，求该项目下所有赛事
+    list_leagues_all = get_media_proj_leagues(media_proj)[0]
 
     # 3.提取关键字中队名及相关信息
     # 根据是否获取到联赛名进行不同处理
     league_names = list(res_dic_league.keys())
     res_dic_team = {}
-    if len(league_names) > 0:
+    if len(league_names) > 0: # 获取到，则传入联赛名，提取该联赛下的球队名
         for league_name in league_names:
             res_dic_team.update(get_asso_sports_team(kws_new, league_name))
     else:
-        res_dic_team.update(get_asso_sports_team(kws_new))
+        if list_leagues_all: # 未获取到，遍历该项目全部赛事，提取该项目下的球队名
+            for league_name in list_leagues_all:
+                res_dic_team.update(get_asso_sports_team(kws_new, league_name))
+        else: # 项目也为空，无条件提取球队名
+            res_dic_team.update(get_asso_sports_team(kws_new))
     res_dic.update(res_dic_team)
 
     # 4.提取关键字中运动员名及相关信息
     res_dic.update(get_asso_sports_member(kws_new))
 
-    # 5.数量不够再使用模型预测
+    # 5.如果无法得到联赛、球队、球员相关信息，或者只有一个联赛信息，则推荐该项目下三个赛事
+    if len(res_dic) < 2:
+        res_dic.update(get_media_proj_leagues(media_proj)[1])
+
+    # 6.数量不够再使用模型预测
     res_dic_predict = {}
     if len(res_dic) < 3:
         kws_new = [w.strip() for w in kws_new if predict(w) == 'sports']

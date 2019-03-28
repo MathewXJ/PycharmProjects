@@ -1,5 +1,6 @@
 {"_id":{"$oid":"5c7e291529e93d13187fe400"},"id":"1003863C","name":"CBA","alias":"中国职业篮球联赛","leagueType":"BASKETBALL"}
 {"_id":{"$oid":"5c7e291529e93d13187fe401"},"id":"1003864C","name":"NBA","alias":"美国职业篮球联赛|美职联","leagueType":"BASKETBALL"}
+{"_id":{"$oid":"5c7e291529e93d13187fe402"},"id":"1003865C","name":"中超","alias":"中国足球协会超级联赛|中超联赛","leagueType":"FOOTBALL"}
 {"_id":{"$oid":"5c7e291529e93d13187fe402"},"id":"1003865C","name":"西甲","alias":"西班牙足球甲级联赛","leagueType":"FOOTBALL"}
 {"_id":{"$oid":"5c7e291529e93d13187fe403"},"id":"1003866C","name":"德甲","alias":"德国足球甲级联赛","leagueType":"FOOTBALL"}
 {"_id":{"$oid":"5c7e291529e93d13187fe404"},"id":"1003867C","name":"英超","alias":"英格兰足球超级联赛","leagueType":"FOOTBALL"}
@@ -8,3 +9,7 @@
 {"_id":{"$oid":"5c7e291629e93d13187fe406"},"id":"1003869C","name":"男排超级联赛","alias":"中国男排超级联赛|男排联赛|排超","leagueType":"VOLLEYBALL"}
 {"_id":{"$oid":"5c7e291629e93d13187fe406"},"id":"1003869C","name":"女排超级联赛","alias":"中国女排超级联赛|女排联赛|排超","leagueType":"VOLLEYBALL"}
 {"_id":{"$oid":"5c7e291629e93d13187fe406"},"id":"1003869C","name":"排超全明星","alias":"排超","leagueType":"VOLLEYBALL"}
+{"_id":{"$oid":"5c7e291629e93d13187fe406"},"id":"1003869C","name":"羽毛球世锦赛","alias":"","leagueType":"BADMINTON"}
+{"_id":{"$oid":"5c7e291629e93d13187fe406"},"id":"1003869C","name":"羽毛球亚锦赛","alias":"","leagueType":"BADMINTON"}
+{"_id":{"$oid":"5c7e291629e93d13187fe406"},"id":"1003869C","name":"全英羽毛球公开赛","alias":"全英|全英公开赛","leagueType":"BADMINTON"}
+{"_id":{"$oid":"5c7e291629e93d13187fe406"},"id":"1003869C","name":"印尼羽毛球大师赛","alias":"印尼大师赛","leagueType":"BADMINTON"}

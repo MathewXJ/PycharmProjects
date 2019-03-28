@@ -6,7 +6,7 @@ from app.util.constants import DATA_FIELD_CONTDISPLAYTYPE_DICT
 from app.util.w2v_fcst import associate_words
 from app.util import constants
 from app.util.remove_utils import remove_not_conts, remove_not_people, is_sports_member, is_sports_team, is_sports_league
-import re, random
+import re
 
 
 # 以关键词作为key，从常量字典中获取value
@@ -140,14 +140,7 @@ def limit_dict_num(input_dict, num):
 
 
 # 根据包含的联赛名，求相关信息及概率
-# 新增参数项目名，若输入中不含联赛名且项目名非空，则返回该项目下任意赛事
-def get_asso_sports_league(kws, media_proj=None):
-    leagues_all = []
-    if media_proj:
-        league_type = constants.MEDIA_PROJ_DICT.get(media_proj)
-        for name, info in SPORT_LEAGUES_ALL_DICT.items():
-            if info.get("leagueType") == league_type:
-                leagues_all.append(name)
+def get_asso_sports_league(kws):
     leagues = []
     for w in kws:
         if w.strip():
@@ -155,15 +148,25 @@ def get_asso_sports_league(kws, media_proj=None):
             if tmp[0]:
                 leagues.append(tmp)
     out = {}
-    if leagues: # 推荐关联出的联赛名
-        for league in leagues:
-            league_name = league[0]
-            out[league_name] = 1.2
-    else:  #无法提取联赛名，则推荐项目名相关联赛
-        if leagues_all:
-            for league_name in random.sample(leagues_all, len(leagues_all)//2 + 1):
-                out[league_name] = 1.2
+    for league in leagues:
+        league_name = league[0]
+        out[league_name] = 1.2
     return out
+
+
+# 根据接口传入的项目名，获取该项目下全部赛事
+def get_media_proj_leagues(media_proj):
+    leagues_all = []
+    out = {}
+    if media_proj:
+        league_type = constants.MEDIA_PROJ_DICT.get(media_proj)
+        for name, info in SPORT_LEAGUES_ALL_DICT.items():
+            if info.get("leagueType") == league_type:
+                leagues_all.append(name)
+    for league_name in leagues_all:
+        out[league_name] = 1.2
+    out = limit_dict_num(out, 3)
+    return leagues_all, out
 
 
 # 根据包含的球队名，求相关信息及概率
