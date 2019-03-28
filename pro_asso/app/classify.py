@@ -1,7 +1,5 @@
 # coding=utf-8
 import fasttext
-# windows版本fasttext大坑
-# import fastText.FastText as fasttext
 import jieba_fast as jieba
 import numpy as np
 from app.common.utils import dbc2sbc
@@ -67,6 +65,7 @@ def predict(line):
 
     # 没有匹配到关键词，则送入模型预测
     cont_seg_list = preprocess_data(cont_rinse)
+    print(cont_seg_list)
     if not cont_seg_list:
         return generate_result('uncertain', prob=1.0)
     # label_prob格式：[[('porn', 0.978516), ('normal', 0.0117188), ...]]
@@ -83,19 +82,3 @@ def predict(line):
             return generate_result('sports', prob=1.0)
 
     return generate_result(label_prob[0], prob=float(label_prob[1]))
-
-
-# if __name__ == "__main__":
-#     RESOURCES_NET_KEYS = [w.strip() for w in resources_net.keys() if w.strip()]
-#     sports_words = []
-#     for w in RESOURCES_NET_KEYS:
-#         if predict(w) == 'sports':
-#             sports_words.append(w)
-#     with open('sports_words.py', 'w') as f:
-#         f.write('sports_words = [' + '\n')
-#         for i in range(len(sports_words)):
-#             if i == len(sports_words) - 1:
-#                 f.write('\'' + sports_words[i] + r"'" + '\n')
-#             else:
-#                 f.write('\'' + sports_words[i] + r"'," + '\n')
-#         f.write(']')
