@@ -3,9 +3,12 @@ import fasttext
 import jieba_fast as jieba
 import numpy as np
 from app.common.utils import dbc2sbc
-from app.common.config import MODEL_FILE_PATH, USER_DIC_PATH, LABEL_PREFIX, RETURN_PROB
+from app.common.config import MODEL_FILE_PATH, USER_DIC_PATH, LABEL_PREFIX, RETURN_PROB, ALL_STAR_NAME_PATH, \
+    INDEX_SX_APP_CONTENT_NAME_PATH
 
 jieba.load_userdict(USER_DIC_PATH)
+jieba.load_userdict(ALL_STAR_NAME_PATH)
+jieba.load_userdict(INDEX_SX_APP_CONTENT_NAME_PATH)
 
 # load训练好的模型
 classifier = fasttext.load_model(MODEL_FILE_PATH, label_prefix=LABEL_PREFIX)

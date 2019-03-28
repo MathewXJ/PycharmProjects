@@ -4,7 +4,7 @@ from app.common.config import user_stop_path_add, user_dic_path, W2V_VOCABULARY_
     ALL_STAR_NAME_PATH, INDEX_SX_APP_CONTENT_PATH, VOCABULARY_PATH, SPORT_LEAGUES_ALL_PATH, SPORT_TEAMS_ALL_PATH, \
     SPORT_MEMBERS_ALL_PATH
 from app.util.resources_net import resources_net
-
+import random
 
 '''
 预生成各种常量字典、集合
@@ -159,5 +159,13 @@ if __name__ == "__main__":
     print(SPORT_TEAMS_ALL_DICT.get('NBA|火箭'))
     print(SPORT_TEAMS_ALL_DICT.get('男排联赛|上海'))
     print(SPORT_LEAGUES_ALL_DICT)
+    leagues_all = []
+    out = {}
+    for name, info in SPORT_LEAGUES_ALL_DICT.items():
+        if info.get("leagueType") == 'VOLLEYBALL':
+            leagues_all.append(name)
+    for league_name in random.sample(leagues_all, len(leagues_all) // 2 + 1):
+        out[league_name] = 1.2
+    print(out)
 
 
