@@ -174,3 +174,5 @@
 {"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"女排超级联赛","leagueId":"37","name":"云南","alias":"云南大学滇池学院女排|云南大学滇池学院|云南大学滇池学院女子排球队","leagueType":"VOLLEYBALL","key_members":""}
 {"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"女排超级联赛","leagueId":"37","name":"四川","alias":"四川女排|四川女子排球队","leagueType":"VOLLEYBALL","key_members":""}
 {"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"女排超级联赛","leagueId":"37","name":"河北","alias":"河北女排|河北女子排球队","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"排超全明星","leagueId":"37","name":"冠军队","alias":"","leagueType":"VOLLEYBALL","key_members":""}
+{"_id":{"$oid":"5c7e26a129e93d11e09d628d"},"leagueName":"排超全明星","leagueId":"37","name":"全明星队","alias":"","leagueType":"VOLLEYBALL","key_members":""}
