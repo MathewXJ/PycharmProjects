@@ -46,8 +46,8 @@ def get_asso_rlt_json(req_data):
 
     # 预测输入是否为体育类
     cont_type = predict(input_str)
-    print('input_str: ', input_str)
-    print('cont_type: ', cont_type)
+    # print('input_str: ', input_str)
+    # print('cont_type: ', cont_type)
     if cont_type == 'sports':
         res_dic.update(get_asso_rlt_sports(input_str, media_proj))
     else:
