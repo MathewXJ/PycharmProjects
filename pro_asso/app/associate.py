@@ -31,6 +31,8 @@ def get_asso_rlt_json(req_data):
     cont = req_data.get(constants.DATA_FIELD_CONT)
     # 项目名
     media_proj = req_data.get(constants.DATA_FIELD_MEDIAPROJ)
+    if not media_proj:  # 项目名不存在时使用搜索词作为项目名，例如排球
+        media_proj = cont
     # 人物内容对象
     star_content = req_data.get(constants.DATA_FIELD_STARCONTENT)
 
