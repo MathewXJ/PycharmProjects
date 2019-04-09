@@ -139,7 +139,9 @@ def limit_dict_num(input_dict, num):
     return out
 
 
-# 根据包含的联赛名，求相关信息及概率
+# 根据包含的联赛名，求该联赛所属项目下相关赛事及概率
+# 输入：关键词列表
+# 输出：1.包含联赛及概率；2.该项目下其它赛事及概率
 def get_asso_sports_league(kws):
     leagues = []
     for w in kws:
@@ -148,10 +150,17 @@ def get_asso_sports_league(kws):
             if tmp[0]:
                 leagues.append(tmp)
     out = {}
+    out_all = {}
     for league in leagues:
+        # 直接包含的联赛及概率
         league_name = league[0]
         out[league_name] = 1.2
-    return out
+        # 该项目下所有赛事及概率
+        league_type = league[1].get('leagueType')
+        leagues_all = get_leagues_all(league_type)
+        for league_name in leagues_all:
+            out_all[league_name] = 1.2
+    return out, limit_dict_num(out_all, 3)
 
 
 # 根据接口传入的项目名，获取该项目下全部赛事
@@ -160,13 +169,21 @@ def get_media_proj_leagues(media_proj):
     out = {}
     if media_proj:
         league_type = constants.MEDIA_PROJ_DICT.get(media_proj)
-        for name, info in SPORT_LEAGUES_ALL_DICT.items():
-            if info.get("leagueType") == league_type:
-                leagues_all.append(name)
+        leagues_all = get_leagues_all(league_type)
     for league_name in leagues_all:
         out[league_name] = 1.2
     out = limit_dict_num(out, 3)
     return leagues_all, out
+
+
+# 输入联赛类型
+# 输出该类型下全部联赛列表
+def get_leagues_all(league_type):
+    leagues_all = []
+    for name, info in SPORT_LEAGUES_ALL_DICT.items():
+        if info.get("leagueType") == league_type:
+            leagues_all.append(name)
+    return leagues_all
 
 
 # 根据包含的球队名，求相关信息及概率
@@ -218,7 +235,10 @@ def get_asso_sports_member(kws):
 
 if __name__ == "__main__":
     str = ['北京', '梅开二度', 'VS', '上海','男排联赛']
+    str = ['西甲', '18', '赛季', '全场', '回放', '阿拉维斯', '塞维利亚', '30', '19']
+    # str = ['中国排球超级联赛']
     print(get_asso_sports_league(str))
     print(get_asso_sports_team(str))
+    print(get_asso_sports_team(str,'西甲'))
     # print(get_asso_sports_member(str))
 

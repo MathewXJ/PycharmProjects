@@ -98,11 +98,13 @@ def get_asso_rlt_sports(cont, media_proj):
     kws_new = sje.distinct_words(kws_extend)
 
     # 1.提取关键字中联赛名及相关信息
-    res_dic_league = get_asso_sports_league(kws_new)
+    league_rlt = get_asso_sports_league(kws_new)
+    res_dic_league = league_rlt[0]
     res_dic.update(res_dic_league)
 
     # 2.根据传入的项目类型，求该项目下所有赛事
-    list_leagues_all = get_media_proj_leagues(media_proj)[0]
+    media_proj_rlt = get_media_proj_leagues(media_proj)
+    list_leagues_all = media_proj_rlt[0]
 
     # 3.提取关键字中队名及相关信息
     # 根据是否获取到联赛名进行不同处理
@@ -124,7 +126,8 @@ def get_asso_rlt_sports(cont, media_proj):
 
     # 5.如果无法得到联赛、球队、球员相关信息，或者只有一个联赛信息，则推荐该项目下三个赛事
     if len(res_dic) < 2:
-        res_dic.update(get_media_proj_leagues(media_proj)[1])
+        res_dic.update(media_proj_rlt[1])
+        res_dic.update(league_rlt[1])
 
     # 6.数量不够再使用模型预测
     res_dic_predict = {}
@@ -136,7 +139,7 @@ def get_asso_rlt_sports(cont, media_proj):
         res_dic_predict = remove_not_sports(res_dic_predict)
     res_dic.update(res_dic_predict)
 
-    #去小写例如nba，只保留NBA;
+    # 去小写例如nba，只保留NBA;
     res_dic_last = {}
     for key, value in res_dic.items():
         key = key.upper()

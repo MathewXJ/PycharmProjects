@@ -242,6 +242,7 @@ if __name__ == "__main__":
     #cont = '杨幂杨幂,湖南平江站'
     cont = '盐城化工场爆炸现场监控视频曝光'
     cont = '新西兰枪击案幸存者：躺地上装死 祈祷枪手子弹快点打光'
+    cont = '18/19赛季西甲第30轮全场回放：塞维利亚2:0阿拉维斯'
     content_names = get_book_title(cont)[0]
     cont_left = get_book_title(cont)[1]
     print(content_names)

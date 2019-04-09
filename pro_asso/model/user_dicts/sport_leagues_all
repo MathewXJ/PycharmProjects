@@ -6,8 +6,8 @@
 {"_id":{"$oid":"5c7e291529e93d13187fe404"},"id":"1003867C","name":"英超","alias":"英格兰足球超级联赛","leagueType":"FOOTBALL"}
 {"_id":{"$oid":"5c7e291529e93d13187fe405"},"id":"1003868C","name":"意甲","alias":"意大利足球甲级联赛","leagueType":"FOOTBALL"}
 {"_id":{"$oid":"5c7e291629e93d13187fe406"},"id":"1003869C","name":"法甲","alias":"法国足球甲级联赛","leagueType":"FOOTBALL"}
-{"_id":{"$oid":"5c7e291629e93d13187fe406"},"id":"1003869C","name":"男排超级联赛","alias":"中国男排超级联赛|男排联赛|排超","leagueType":"VOLLEYBALL"}
-{"_id":{"$oid":"5c7e291629e93d13187fe406"},"id":"1003869C","name":"女排超级联赛","alias":"中国女排超级联赛|女排联赛|排超","leagueType":"VOLLEYBALL"}
+{"_id":{"$oid":"5c7e291629e93d13187fe406"},"id":"1003869C","name":"男排超级联赛","alias":"中国男排超级联赛|男排联赛|排超|中国排球超级联赛","leagueType":"VOLLEYBALL"}
+{"_id":{"$oid":"5c7e291629e93d13187fe406"},"id":"1003869C","name":"女排超级联赛","alias":"中国女排超级联赛|女排联赛|排超|中国排球超级联赛","leagueType":"VOLLEYBALL"}
 {"_id":{"$oid":"5c7e291629e93d13187fe406"},"id":"1003869C","name":"排超全明星","alias":"排超","leagueType":"VOLLEYBALL"}
 {"_id":{"$oid":"5c7e291629e93d13187fe406"},"id":"1003869C","name":"羽毛球世锦赛","alias":"","leagueType":"BADMINTON"}
 {"_id":{"$oid":"5c7e291629e93d13187fe406"},"id":"1003869C","name":"羽毛球亚锦赛","alias":"","leagueType":"BADMINTON"}
